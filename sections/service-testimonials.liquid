@@ -1,0 +1,204 @@
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-testimonials page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-testimonials__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="service-testimonials__heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="service-testimonials__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="service-testimonials__grid">
+      {%- for block in section.blocks -%}
+        <div class="service-testimonials__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.quote != blank -%}
+            <p class="service-testimonials__quote">“{{ block.settings.quote }}”</p>
+          {%- endif -%}
+          <div class="service-testimonials__meta">
+            {%- if block.settings.name != blank -%}
+              <span class="service-testimonials__name">{{ block.settings.name }}</span>
+            {%- endif -%}
+            {%- if block.settings.location != blank -%}
+              <span class="service-testimonials__location">{{ block.settings.location }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.service_area != blank -%}
+      <div class="service-testimonials__area">
+        <span class="service-testimonials__area-label">Service area:</span>
+        <span>{{ section.settings.service_area }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials & area",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by homeowners"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Responsive, trustworthy service for snow, lawn, IT, and pet care."
+    },
+    {
+      "type": "text",
+      "id": "service_area",
+      "label": "Service area note",
+      "default": "Serving homeowners across Ontario, Canada."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Great communication and fast service—highly recommend."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Homeowner"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location or service type",
+          "default": "Snow Removal"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Card color scheme",
+          "default": "scheme-2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials + service area",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-testimonials__header {
+    display: grid;
+    gap: var(--gap-sm);
+    max-width: 48rem;
+    margin-bottom: var(--gap-xl);
+  }
+
+  .service-testimonials__subheading {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .service-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--gap-lg);
+  }
+
+  .service-testimonials__card {
+    padding: var(--padding-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .service-testimonials__quote {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .service-testimonials__meta {
+    display: flex;
+    gap: var(--gap-sm);
+    font-weight: 600;
+    flex-wrap: wrap;
+  }
+
+  .service-testimonials__location {
+    color: var(--color-foreground);
+    font-weight: 400;
+  }
+
+  .service-testimonials__area {
+    margin-top: var(--gap-xl);
+    padding: var(--gap-md) var(--gap-lg);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--style-border-radius-cards);
+    display: inline-flex;
+    gap: var(--gap-sm);
+    align-items: center;
+    background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+  }
+
+  .service-testimonials__area-label {
+    font-weight: 700;
+  }
+{% endstylesheet %}

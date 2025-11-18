@@ -1,0 +1,168 @@
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-category page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-category__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="service-category__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="service-category__heading h1">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="service-category__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+      <div class="service-category__actions">
+        {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+          <a
+            class="button"
+            href="{{ section.settings.cta_link }}"
+            {% if section.settings.cta_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+          >
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+          <a
+            class="button-secondary"
+            href="{{ section.settings.secondary_link }}"
+            {% if section.settings.secondary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+          >
+            {{ section.settings.secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Service category hero",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Service category"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Snow Removal"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Clearing driveways, walkways, and entrances with reliable response times all winter."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Primary CTA label",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_new_tab",
+      "label": "Open primary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Book a Service"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "secondary_new_tab",
+      "label": "Open secondary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service category hero"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-category__content {
+    display: grid;
+    gap: var(--gap-md);
+    max-width: 780px;
+  }
+
+  .service-category__eyebrow {
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .service-category__heading {
+    margin: 0;
+  }
+
+  .service-category__description {
+    margin: 0;
+    color: var(--color-foreground);
+    line-height: 1.6;
+  }
+
+  .service-category__actions {
+    display: flex;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
+    margin-top: var(--gap-sm);
+  }
+{% endstylesheet %}

@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "hero": {
+      "type": "service-category",
+      "settings": {
+        "eyebrow": "Service category",
+        "heading": "Snow Removal",
+        "description": "Clearing driveways, walkways, and entrances with reliable response times all winter.",
+        "cta_label": "Request a Quote",
+        "cta_link": "/pages/contact",
+        "cta_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 84,
+        "padding-block-end": 48
+      }
+    },
+    "pricing": {
+      "type": "service-pricing",
+      "settings": {
+        "heading": "Get pricing for snow removal",
+        "subheading": "Tell us your driveway/walkway needs to calculate a service price.",
+        "embed_code": "",
+        "primary_label": "Request a Quote",
+        "primary_link": "/pages/contact",
+        "primary_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "subservices": {
+      "type": "service-subservices",
+      "blocks": {
+        "driveway": {
+          "type": "item",
+          "settings": {
+            "title": "Driveway clearing",
+            "description": "Timely plowing and shoveling for driveways and garage access.",
+            "icon": "",
+            "icon_fallback": "🛻",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "walkway": {
+          "type": "item",
+          "settings": {
+            "title": "Walkways & steps",
+            "description": "Hand-shoveled paths and steps for safer entryways.",
+            "icon": "",
+            "icon_fallback": "🚪",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "ice": {
+          "type": "item",
+          "settings": {
+            "title": "Ice management",
+            "description": "Salting/sanding to reduce slip hazards after storms.",
+            "icon": "",
+            "icon_fallback": "🧊",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        }
+      },
+      "block_order": ["driveway", "walkway", "ice"],
+      "settings": {
+        "heading": "What’s included",
+        "subheading": "Pick the snow removal options you need this season.",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    }
+  },
+  "order": ["hero", "pricing", "subservices"]
+}

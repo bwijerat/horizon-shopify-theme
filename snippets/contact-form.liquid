@@ -1,5 +1,5 @@
 {%- doc -%}
-  Renders a contact form with name, email, phone, and comment fields.
+  Renders a contact form with name, email, phone, address, service selections, preferred timing, and comment fields.
 
   @param {object} settings - Block settings, required for the 'spacing-style' and 'size-style' snippets.
   @param {string} submit_button - HTML for the submit button, rendered via a `content_for` block.
@@ -101,10 +101,67 @@
       class="contact-form__input"
       autocomplete="tel"
       name="contact[phone]"
-      pattern="[0-9\-]*"
+      pattern="[0-9\\-]*"
       value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
       placeholder="{{ 'blocks.contact_form.phone' | t }}"
     >
+
+    <label class="visually-hidden" for="ContactForm-address">
+      Address
+    </label>
+    <input
+      type="text"
+      id="ContactForm-address"
+      class="contact-form__input"
+      name="contact[address]"
+      autocomplete="street-address"
+      placeholder="Service address"
+    >
+
+    <div class="contact-form__form-row">
+      <div class="contact-form__input contact-form__input--select">
+        <label class="visually-hidden" for="ContactForm-category">Preferred service category</label>
+        <select id="ContactForm-category" name="contact[service_category]">
+          <option value="">Preferred service category</option>
+          <option>Snow Removal</option>
+          <option>Lawn Care</option>
+          <option>IT Support</option>
+          <option>Pet Care</option>
+        </select>
+      </div>
+      <div class="contact-form__input contact-form__input--select">
+        <label class="visually-hidden" for="ContactForm-subservice">Subservice</label>
+        <input
+          type="text"
+          id="ContactForm-subservice"
+          name="contact[subservice]"
+          placeholder="Subservice (e.g., Grass cutting, Wi-Fi setup)"
+        >
+      </div>
+    </div>
+
+    <div class="contact-form__form-row">
+      <div class="contact-form__input">
+        <label class="visually-hidden" for="ContactForm-date">Preferred date</label>
+        <input
+          type="text"
+          id="ContactForm-date"
+          name="contact[preferred_date]"
+          placeholder="Preferred date"
+          inputmode="text"
+        >
+      </div>
+      <div class="contact-form__input">
+        <label class="visually-hidden" for="ContactForm-time">Preferred time</label>
+        <input
+          type="text"
+          id="ContactForm-time"
+          name="contact[preferred_time]"
+          placeholder="Preferred time"
+          inputmode="text"
+        >
+      </div>
+    </div>
 
     <label
       class="visually-hidden"
@@ -159,6 +216,14 @@
   .contact-form__input--textarea {
     resize: vertical;
     min-height: var(--input-textarea-min-height);
+  }
+
+  .contact-form__input--select select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
   }
 
   .contact-form__error,

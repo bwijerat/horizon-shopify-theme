@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "hero": {
+      "type": "service-category",
+      "settings": {
+        "eyebrow": "Service category",
+        "heading": "Lawn Care",
+        "description": "Grass cutting, leaf collection, and seasonal tidy-ups to keep your yard ready.",
+        "cta_label": "Request a Quote",
+        "cta_link": "/pages/contact",
+        "cta_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 84,
+        "padding-block-end": 48
+      }
+    },
+    "pricing": {
+      "type": "service-pricing",
+      "settings": {
+        "heading": "Get pricing for lawn care",
+        "subheading": "Share your lawn size and frequency to estimate the visit.",
+        "embed_code": "",
+        "primary_label": "Request a Quote",
+        "primary_link": "/pages/contact",
+        "primary_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "subservices": {
+      "type": "service-subservices",
+      "blocks": {
+        "mowing": {
+          "type": "item",
+          "settings": {
+            "title": "Grass cutting",
+            "description": "Scheduled mowing to keep lawns healthy and neat.",
+            "icon": "",
+            "icon_fallback": "✂️",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "leaves": {
+          "type": "item",
+          "settings": {
+            "title": "Leaf collection",
+            "description": "Rake, bag, and remove leaves to prevent buildup.",
+            "icon": "",
+            "icon_fallback": "🍂",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "cleanup": {
+          "type": "item",
+          "settings": {
+            "title": "Seasonal cleanups",
+            "description": "Edging, debris removal, and bed tidying for a fresh start.",
+            "icon": "",
+            "icon_fallback": "🧹",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        }
+      },
+      "block_order": ["mowing", "leaves", "cleanup"],
+      "settings": {
+        "heading": "What’s included",
+        "subheading": "Choose the lawn care services that fit your property.",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    }
+  },
+  "order": ["hero", "pricing", "subservices"]
+}

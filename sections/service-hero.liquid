@@ -1,0 +1,222 @@
+{%- liquid
+  assign section_id = 'service-hero-' | append: section.id
+-%}
+
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    id="{{ section_id }}"
+    class="section service-hero page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-hero__inner">
+      <div class="service-hero__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="service-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="service-hero__heading h1">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="service-hero__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        <div class="service-hero__actions">
+          {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
+            <a
+              class="button"
+              href="{{ section.settings.primary_link }}"
+              {% if section.settings.primary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+            >
+              {{ section.settings.primary_label }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+            <a
+              class="button-secondary"
+              href="{{ section.settings.secondary_link }}"
+              {% if section.settings.secondary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+            >
+              {{ section.settings.secondary_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="service-hero__media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '180, 360, 720, 960, 1200, 1500', sizes: '(min-width: 1200px) 50vw, 100vw', alt: section.settings.image_alt | default: section.settings.heading | escape }}
+        {%- else -%}
+          <div class="service-hero__placeholder">
+            <span>{{ 'Image placeholder' | t }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Service hero",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "HomeBase Support Services"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "On-Demand Home Services You Can Rely On"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Snow removal, lawn care, IT support, and pet care for homeowners in your area."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary CTA label",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "primary_new_tab",
+      "label": "Open primary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary CTA label",
+      "default": "View Services"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "secondary_new_tab",
+      "label": "Open secondary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background/feature image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-6"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service hero"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-xxl);
+    align-items: center;
+  }
+
+  .service-hero__eyebrow {
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .service-hero__heading {
+    margin: 0;
+  }
+
+  .service-hero__subheading {
+    margin: var(--gap-md) 0;
+    color: var(--color-foreground);
+    max-width: 44rem;
+  }
+
+  .service-hero__actions {
+    display: flex;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
+  }
+
+  .service-hero__media {
+    width: 100%;
+  }
+
+  .service-hero__media img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--style-border-radius-cards);
+    object-fit: cover;
+  }
+
+  .service-hero__placeholder {
+    width: 100%;
+    min-height: 280px;
+    border: 1px dashed var(--color-border);
+    display: grid;
+    place-items: center;
+    color: var(--color-foreground);
+    border-radius: var(--style-border-radius-cards);
+  }
+
+  @media screen and (min-width: 900px) {
+    .service-hero__inner {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+{% endstylesheet %}

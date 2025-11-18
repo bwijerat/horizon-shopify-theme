@@ -1,0 +1,165 @@
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-steps page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-steps__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="service-steps__heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="service-steps__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="service-steps__grid">
+      {%- for block in section.blocks -%}
+        <div class="service-steps__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+          <div class="service-steps__badge">{{ forloop.index }}</div>
+          {%- if block.settings.title != blank -%}
+            <h3 class="service-steps__title h4">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="service-steps__description">{{ block.settings.description }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "How it works (3-step)",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How it works"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tell us what you need, we confirm details, then deliver reliable service."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Request"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Tell us the service, address, and timing you need."
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Card color scheme",
+          "default": "scheme-2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works (3-step)",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Request", "description": "Share the service category, address, and timing." } },
+        { "type": "step", "settings": { "title": "We confirm", "description": "We review the request and schedule your visit." } },
+        { "type": "step", "settings": { "title": "Service performed", "description": "Trusted pros complete the job and check satisfaction." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-steps__header {
+    display: grid;
+    gap: var(--gap-sm);
+    max-width: 48rem;
+    margin-bottom: var(--gap-xl);
+  }
+
+  .service-steps__subheading {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .service-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-lg);
+  }
+
+  .service-steps__card {
+    padding: var(--padding-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    display: grid;
+    gap: var(--gap-sm);
+    align-content: start;
+  }
+
+  .service-steps__badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--color-primary);
+    color: var(--color-primary-text, #fff);
+    font-weight: 700;
+  }
+
+  .service-steps__description {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}

@@ -1,0 +1,168 @@
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-pricing page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-pricing__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="service-pricing__heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="service-pricing__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="service-pricing__actions">
+        {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
+          <a
+            class="button"
+            href="{{ section.settings.primary_link }}"
+            {% if section.settings.primary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+          >
+            {{ section.settings.primary_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+          <a
+            class="button-secondary"
+            href="{{ section.settings.secondary_link }}"
+            {% if section.settings.secondary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+          >
+            {{ section.settings.secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.embed_code != blank -%}
+        <div class="service-pricing__embed">
+          {{ section.settings.embed_code }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Service pricing",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get a service price in minutes"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Use our calculator or request a quote and we’ll confirm details quickly."
+    },
+    {
+      "type": "richtext",
+      "id": "embed_code",
+      "label": "Calculator embed or app block placeholder",
+      "info": "Paste third-party calculator embed code here (or leave blank to only show buttons)."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary CTA label",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "primary_new_tab",
+      "label": "Open primary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Book a Service"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "secondary_new_tab",
+      "label": "Open secondary CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service pricing"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-pricing__content {
+    display: grid;
+    gap: var(--gap-md);
+    max-width: 720px;
+  }
+
+  .service-pricing__subheading {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .service-pricing__actions {
+    display: flex;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
+    margin-top: var(--gap-sm);
+  }
+
+  .service-pricing__embed {
+    margin-top: var(--gap-lg);
+    padding: var(--padding-lg);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+  }
+{% endstylesheet %}

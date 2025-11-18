@@ -1,0 +1,219 @@
+<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-core page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-core__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="service-core__heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="service-core__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="service-core__grid">
+      {%- for block in section.blocks -%}
+        <div class="service-core__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="service-core__icon">
+              {{ block.settings.icon | image_url: width: 120 | image_tag: loading: 'lazy', sizes: '120px', alt: block.settings.title | escape }}
+            </div>
+          {%- elsif block.settings.icon_fallback != blank -%}
+            <div class="service-core__icon">{{ block.settings.icon_fallback }}</div>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h3 class="service-core__title h4">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="service-core__description">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+            <a
+              class="button-secondary"
+              href="{{ block.settings.link }}"
+              {% if block.settings.link_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+            >
+              {{ block.settings.link_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Core services (4-up)",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Core Services"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Snow Removal, Lawn Care, IT Support, and Pet Care tailored for homeowners."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 84
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 84
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Snow Removal"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Dependable clearing for driveways, walkways, and entryways all winter."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon or image"
+        },
+        {
+          "type": "text",
+          "id": "icon_fallback",
+          "label": "Icon fallback (emoji/text)",
+          "default": "❄️"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Button label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "link_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Card color scheme",
+          "default": "scheme-2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Core services (4-up)",
+      "blocks": [
+        { "type": "service", "settings": { "title": "Snow Removal", "icon_fallback": "❄️" } },
+        { "type": "service", "settings": { "title": "Lawn Care", "icon_fallback": "🌿" } },
+        { "type": "service", "settings": { "title": "IT Support", "icon_fallback": "💻" } },
+        { "type": "service", "settings": { "title": "Pet Care", "icon_fallback": "🐾" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-core__header {
+    display: grid;
+    gap: var(--gap-sm);
+    max-width: 48rem;
+    margin-bottom: var(--gap-xl);
+  }
+
+  .service-core__subheading {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .service-core__grid {
+    display: grid;
+    gap: var(--gap-lg);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .service-core__card {
+    padding: var(--padding-xl);
+    border-radius: var(--style-border-radius-cards);
+    border: 1px solid var(--color-border);
+    display: grid;
+    gap: var(--gap-md);
+    align-content: start;
+  }
+
+  .service-core__icon {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    border-radius: 50%;
+    background: var(--color-surface, rgba(0,0,0,0.04));
+    overflow: hidden;
+  }
+
+  .service-core__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-core__title {
+    margin: 0;
+  }
+
+  .service-core__description {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}

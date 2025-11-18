@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "hero": {
+      "type": "service-category",
+      "settings": {
+        "eyebrow": "Service category",
+        "heading": "IT Support",
+        "description": "Home technology setup, troubleshooting, and consulting to keep you connected.",
+        "cta_label": "Request a Quote",
+        "cta_link": "/pages/contact",
+        "cta_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 84,
+        "padding-block-end": 48
+      }
+    },
+    "pricing": {
+      "type": "service-pricing",
+      "settings": {
+        "heading": "Get pricing for IT support",
+        "subheading": "Describe your setup so we can estimate time and equipment.",
+        "embed_code": "",
+        "primary_label": "Request a Quote",
+        "primary_link": "/pages/contact",
+        "primary_new_tab": false,
+        "secondary_label": "Book a Service",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "subservices": {
+      "type": "service-subservices",
+      "blocks": {
+        "general": {
+          "type": "item",
+          "settings": {
+            "title": "General IT support",
+            "description": "Troubleshooting Wi-Fi, printers, and smart home devices.",
+            "icon": "",
+            "icon_fallback": "📶",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "setup": {
+          "type": "item",
+          "settings": {
+            "title": "Setup & installation",
+            "description": "Router installs, device setup, and cable management.",
+            "icon": "",
+            "icon_fallback": "⚙️",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        },
+        "consulting": {
+          "type": "item",
+          "settings": {
+            "title": "Consulting",
+            "description": "Recommendations for upgrades, security, and backups.",
+            "icon": "",
+            "icon_fallback": "💡",
+            "link_label": "Request this",
+            "link": "/pages/contact",
+            "link_new_tab": false,
+            "color_scheme": "scheme-2"
+          }
+        }
+      },
+      "block_order": ["general", "setup", "consulting"],
+      "settings": {
+        "heading": "What’s included",
+        "subheading": "Pick the IT help you need for a safer, faster home setup.",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    }
+  },
+  "order": ["hero", "pricing", "subservices"]
+}
