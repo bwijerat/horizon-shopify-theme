@@ -19,7 +19,12 @@
           <h1 class="service-hero__heading h1">{{ section.settings.heading }}</h1>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
-          <p class="service-hero__subheading">{{ section.settings.subheading }}</p>
+          <p
+            class="service-hero__subheading"
+            style="margin-top: {{ section.settings.heading_gap }}px;"
+          >
+            {{ section.settings.subheading }}
+          </p>
         {%- endif -%}
         <div class="service-hero__actions">
           {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
@@ -77,6 +82,16 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "HomeBase Support Services"
+    },
+    {
+      "type": "range",
+      "id": "heading_gap",
+      "label": "Spacing between heading and subheading",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "text",
@@ -211,7 +226,7 @@
   }
 
   .service-hero__subheading {
-    margin: var(--gap-md) 0;
+    margin: 0;
     color: var(--color-foreground);
     max-width: 44rem;
   }

@@ -13,7 +13,12 @@
         <h2 class="service-steps__heading h2">{{ section.settings.heading }}</h2>
       {%- endif -%}
       {%- if section.settings.subheading != blank -%}
-        <p class="service-steps__subheading">{{ section.settings.subheading }}</p>
+        <p
+          class="service-steps__subheading"
+          style="margin-top: {{ section.settings.heading_gap }}px;"
+        >
+          {{ section.settings.subheading }}
+        </p>
       {%- endif -%}
     </div>
 
@@ -76,6 +81,16 @@
       "type": "range",
       "id": "heading_padding_bottom",
       "label": "Heading bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_gap",
+      "label": "Spacing between heading and subheading",
       "min": 0,
       "max": 80,
       "step": 4,
