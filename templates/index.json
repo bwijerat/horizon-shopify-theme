@@ -174,12 +174,48 @@
         "padding-block-start": 80,
         "padding-block-end": 80
       }
+    },
+    "service_area": {
+      "type": "service-area",
+      "blocks": {
+        "oakville": {
+          "type": "area",
+          "settings": {
+            "title": "Oakville",
+            "description": "River Oaks, Westmount, Bronte",
+            "postal_codes": "L6H\nL6M\nL6L\nL6K",
+            "color_scheme": "scheme-2"
+          }
+        },
+        "burlington": {
+          "type": "area",
+          "settings": {
+            "title": "Burlington",
+            "description": "Headon, Alton Village, Roseland",
+            "postal_codes": "L7L\nL7M\nL7P",
+            "color_scheme": "scheme-2"
+          }
+        }
+      },
+      "block_order": [
+        "oakville",
+        "burlington"
+      ],
+      "settings": {
+        "heading": "Service area",
+        "subheading": "We currently serve homeowners throughout Halton and Peel Region.",
+        "note": "Need help outside these zones? Send your request and we’ll confirm availability.",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
     }
   },
   "order": [
     "service_hero",
     "core_services",
     "steps",
-    "testimonials"
+    "testimonials",
+    "service_area"
   ]
 }

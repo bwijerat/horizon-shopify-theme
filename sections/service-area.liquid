@@ -1,0 +1,198 @@
+<div class="section-wrapper section-wrapper--spacious color-{{ section.settings.color_scheme }}">
+  <div
+    class="section service-area page-width"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+    "
+  >
+    <div class="service-area__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="service-area__heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="service-area__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.note != blank -%}
+        <p class="service-area__note">{{ section.settings.note }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="service-area__grid">
+      {%- for block in section.blocks -%}
+        <div class="service-area__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="service-area__card-title h4">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="service-area__card-description">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.postal_codes != blank -%}
+            <ul class="service-area__codes">
+              {%- assign codes = block.settings.postal_codes | replace: '\r', '' | split: '\n' -%}
+              {%- for code in codes -%}
+                {%- assign trimmed = code | strip -%}
+                {%- if trimmed != blank -%}
+                  <li>{{ trimmed }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Service area",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Serving homeowners across Ontario"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We offer on-site visits in Oakville, Burlington, Mississauga, and nearby communities."
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "default": "If you don't see your postal code listed, reach out and we'll confirm availability."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "area",
+      "name": "Postal code group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Area title",
+          "default": "Oakville"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "West Oak Trails, Bronte, River Oaks"
+        },
+        {
+          "type": "textarea",
+          "id": "postal_codes",
+          "label": "Postal codes (one per line)",
+          "default": "L6H\nL6M\nL6L\nL6K"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Card color scheme",
+          "default": "scheme-2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service area",
+      "blocks": [
+        { "type": "area" },
+        { "type": "area" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .service-area__header {
+    display: grid;
+    gap: var(--gap-sm);
+    max-width: 48rem;
+    margin-bottom: var(--gap-xl);
+  }
+
+  .service-area__subheading,
+  .service-area__note {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .service-area__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-lg);
+  }
+
+  .service-area__card {
+    padding: var(--padding-xl);
+    border-radius: var(--style-border-radius-cards);
+    border: 1px solid var(--color-border);
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .service-area__card-title {
+    margin: 0;
+  }
+
+  .service-area__card-description {
+    margin: 0;
+  }
+
+  .service-area__codes {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs);
+    padding: 0;
+    margin: 0;
+  }
+
+  .service-area__codes li {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+    font-weight: 600;
+  }
+{% endstylesheet %}
