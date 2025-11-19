@@ -9,16 +9,20 @@
       {%- if section.settings.eyebrow != blank -%}
         <p class="service-category__eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h1 class="service-category__heading h1">{{ section.settings.heading }}</h1>
-      {%- endif -%}
-      {%- if section.settings.description != blank -%}
-        <p
-          class="service-category__description"
-          style="margin-top: {{ section.settings.heading_gap }}px;"
+      {%- if section.settings.heading != blank or section.settings.description != blank -%}
+        <div
+          class="service-category__text"
+          style="row-gap: {{ section.settings.heading_gap }}px;"
         >
-          {{ section.settings.description }}
-        </p>
+          {%- if section.settings.heading != blank -%}
+            <h1 class="service-category__heading h1">{{ section.settings.heading }}</h1>
+          {%- endif -%}
+          {%- if section.settings.description != blank -%}
+            <p class="service-category__description">
+              {{ section.settings.description }}
+            </p>
+          {%- endif -%}
+        </div>
       {%- endif -%}
       <div class="service-category__actions">
         {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
@@ -156,6 +160,11 @@
     display: grid;
     gap: var(--gap-md);
     max-width: 780px;
+  }
+
+  .service-category__text {
+    display: grid;
+    gap: 0;
   }
 
   .service-category__eyebrow {

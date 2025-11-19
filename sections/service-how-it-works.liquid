@@ -7,16 +7,13 @@
   >
     <div
       class="service-steps__header"
-      style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px;"
+      style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
     >
       {%- if section.settings.heading != blank -%}
         <h2 class="service-steps__heading h2">{{ section.settings.heading }}</h2>
       {%- endif -%}
       {%- if section.settings.subheading != blank -%}
-        <p
-          class="service-steps__subheading"
-          style="margin-top: {{ section.settings.heading_gap }}px;"
-        >
+        <p class="service-steps__subheading">
           {{ section.settings.subheading }}
         </p>
       {%- endif -%}
@@ -164,7 +161,7 @@
 {% stylesheet %}
   .service-steps__header {
     display: grid;
-    gap: var(--gap-sm);
+    gap: 0;
     max-width: 48rem;
     margin-bottom: var(--gap-xl);
   }

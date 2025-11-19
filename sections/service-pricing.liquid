@@ -8,16 +8,13 @@
     <div class="service-pricing__content">
       <div
         class="service-pricing__intro"
-        style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px;"
+        style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
       >
         {%- if section.settings.heading != blank -%}
           <h2 class="service-pricing__heading h2">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
-          <p
-            class="service-pricing__subheading"
-            style="margin-top: {{ section.settings.heading_gap }}px;"
-          >
+          <p class="service-pricing__subheading">
             {{ section.settings.subheading }}
           </p>
         {%- endif -%}
@@ -193,7 +190,7 @@
 
   .service-pricing__intro {
     display: grid;
-    gap: var(--gap-sm);
+    gap: 0;
   }
 
   .service-pricing__subheading {
