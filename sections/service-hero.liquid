@@ -31,6 +31,16 @@
               {{ section.settings.primary_label }}
             </a>
           {%- endif -%}
+          {%- assign booking_link = section.settings.booking_link | default: settings.booking_page_link -%}
+          {%- if section.settings.booking_label != blank and booking_link != blank -%}
+            <a
+              class="button button--book"
+              href="{{ booking_link }}"
+              {% if section.settings.booking_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+            >
+              {{ section.settings.booking_label }}
+            </a>
+          {%- endif -%}
           {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
             <a
               class="button-secondary"
@@ -115,6 +125,24 @@
       "default": false
     },
     {
+      "type": "text",
+      "id": "booking_label",
+      "label": "Booking CTA label",
+      "default": "Book Service"
+    },
+    {
+      "type": "url",
+      "id": "booking_link",
+      "label": "Booking CTA link",
+      "info": "Defaults to the booking page link in theme settings if left blank."
+    },
+    {
+      "type": "checkbox",
+      "id": "booking_new_tab",
+      "label": "Open booking CTA in new tab",
+      "default": false
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "Background/feature image"
@@ -172,9 +200,10 @@
   }
 
   .service-hero__eyebrow {
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     font-weight: 600;
+    font-size: 1.2rem;
   }
 
   .service-hero__heading {

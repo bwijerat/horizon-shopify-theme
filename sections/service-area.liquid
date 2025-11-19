@@ -5,7 +5,10 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    <div class="service-area__header">
+    <div
+      class="service-area__header"
+      style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px;"
+    >
       {%- if section.settings.heading != blank -%}
         <h2 class="service-area__heading h2">{{ section.settings.heading }}</h2>
       {%- endif -%}
@@ -73,6 +76,30 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Heading spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_top",
+      "label": "Heading top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_bottom",
+      "label": "Heading bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "header",

@@ -54,9 +54,23 @@
             "padding-inline-end": 0
           },
           "blocks": {}
+        },
+        "phone_block": {
+          "type": "custom-liquid",
+          "settings": {
+            "liquid": "{% if settings.business_phone != blank %}<p class=\"contact-phone\">Prefer to call? <a href=\"tel:{{ settings.business_phone | strip | remove: ' ' | replace: '(', '' | replace: ')', '' | replace: '.', '' | replace: '-', '' }}\">{{ settings.business_phone }}</a></p>{% endif %}",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["title", "content"],
+      "block_order": ["title", "content", "phone_block"],
       "settings": {
         "content_direction": "column",
         "gap": 32,

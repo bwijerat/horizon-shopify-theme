@@ -2320,6 +2320,18 @@
         "id": "secondary_cta_label",
         "label": "Secondary CTA label",
         "default": "Book a Service"
+      },
+      {
+        "type": "text",
+        "id": "business_phone",
+        "label": "Business phone number",
+        "default": "1 (800) 123-4567"
+      },
+      {
+        "type": "url",
+        "id": "booking_page_link",
+        "label": "Booking page link",
+        "info": "Link to the bookings page for the Book Service buttons."
       }
     ]
   },

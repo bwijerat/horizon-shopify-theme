@@ -4296,3 +4296,12 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
+.contact-phone {
+  font-weight: 600;
+  text-align: center;
+}
+
+.contact-phone a {
+  color: var(--color-primary);
+  text-decoration: none;
+}

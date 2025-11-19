@@ -90,8 +90,29 @@
     endif
   endif
   capture search
+    if settings.business_phone != blank
+      assign phone_href = settings.business_phone | strip | remove: ' ' | replace: '(', '' | replace: ')', '' | replace: '.', '' | replace: '-', ''
+      echo '<a class="header__phone" href="tel:'
+      echo phone_href
+      echo '">'
+      echo settings.business_phone
+      echo '</a>'
+    endif
     render 'search', style: search_style, class: search_class
   endcapture
+
+  assign booking_link_header = settings.booking_page_link
+  assign booking_label_header = settings.secondary_cta_label | default: 'Book Service'
+  if booking_link_header != blank
+    capture book_service
+      echo '<a class="header__book-link" href="'
+      echo booking_link_header
+      echo '">'
+      echo booking_label_header
+      echo '</a>'
+    endcapture
+    assign order = order | append: ',book_service'
+  endif
 
   # Skip mobile search under specific conditions:
   # Always render if search_row is bottom
@@ -241,7 +262,8 @@
         actions: actions,
         localization: localization_markup,
         search: search,
-        mobile_search: mobile_search
+        mobile_search: mobile_search,
+        book_service: book_service
       %}
     {% endcapture %}
 
@@ -440,6 +462,33 @@
     @media screen and (max-width: 749px) {
       display: contents;
     }
+  }
+
+  .header__phone,
+  .header__book-link {
+    font-weight: 600;
+    text-transform: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+    color: var(--color-foreground);
+    white-space: nowrap;
+  }
+
+  .header__phone {
+    margin-inline-end: var(--gap-sm);
+  }
+
+  .header__phone:hover,
+  .header__book-link:hover {
+    color: var(--color-primary);
+  }
+
+  .header__book-link {
+    padding: 0.4rem 1rem;
+    border-radius: var(--style-border-radius-buttons);
+    border: 1px solid currentcolor;
   }
 
   .header__column--left,

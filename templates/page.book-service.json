@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "booking": {
+      "type": "service-booking",
+      "settings": {
+        "eyebrow": "Book a service",
+        "heading": "Schedule your HomeBase visit",
+        "subheading": "Choose snow removal, lawn care, IT support, or pet care and request your preferred date.",
+        "embed_code": "",
+        "primary_label": "Request a Quote",
+        "primary_link": "/pages/contact",
+        "primary_new_tab": false,
+        "secondary_label": "Need help?",
+        "secondary_link": "/pages/contact",
+        "secondary_new_tab": false,
+        "color_scheme": "scheme-1",
+        "heading_padding_top": 0,
+        "heading_padding_bottom": 16,
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "booking"
+  ]
+}

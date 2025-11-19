@@ -1,24 +1,27 @@
 <div class="section-wrapper color-{{ section.settings.color_scheme }}">
   <div
-    class="section service-pricing page-width spacing-style"
+    class="section service-booking page-width spacing-style"
     style="
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    <div class="service-pricing__content">
+    <div class="service-booking__content">
       <div
-        class="service-pricing__intro"
+        class="service-booking__intro"
         style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px;"
       >
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="service-booking__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="service-pricing__heading h2">{{ section.settings.heading }}</h2>
+          <h1 class="service-booking__heading h1">{{ section.settings.heading }}</h1>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
-          <p class="service-pricing__subheading">{{ section.settings.subheading }}</p>
+          <p class="service-booking__subheading">{{ section.settings.subheading }}</p>
         {%- endif -%}
       </div>
 
-      <div class="service-pricing__actions">
+      <div class="service-booking__actions">
         {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
           <a
             class="button"
@@ -40,8 +43,12 @@
       </div>
 
       {%- if section.settings.embed_code != blank -%}
-        <div class="service-pricing__embed">
+        <div class="service-booking__embed">
           {{ section.settings.embed_code }}
+        </div>
+      {%- else -%}
+        <div class="service-booking__placeholder">
+          <p>Add your booking app embed code here.</p>
         </div>
       {%- endif -%}
     </div>
@@ -50,27 +57,33 @@
 
 {% schema %}
 {
-  "name": "Service pricing",
+  "name": "Booking hero + embed",
   "tag": "section",
   "class": "section-wrapper",
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Book a service"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Get a service price in minutes"
+      "default": "Schedule your home service"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Use our calculator or request a quote and we’ll confirm details quickly."
+      "default": "Choose your service, preferred time, and we’ll confirm your visit."
     },
     {
       "type": "richtext",
       "id": "embed_code",
-      "label": "Calculator embed or app block placeholder",
-      "info": "Paste third-party calculator embed code here (or leave blank to only show buttons)."
+      "label": "Booking embed",
+      "info": "Paste booking app embed code or instructions."
     },
     {
       "type": "text",
@@ -93,7 +106,7 @@
       "type": "text",
       "id": "secondary_label",
       "label": "Secondary CTA label",
-      "default": "Book a Service"
+      "default": "Contact us"
     },
     {
       "type": "url",
@@ -134,11 +147,11 @@
       "max": 80,
       "step": 4,
       "unit": "px",
-      "default": 16
+      "default": 20
     },
     {
       "type": "header",
-      "content": "Padding"
+      "content": "Section padding"
     },
     {
       "type": "range",
@@ -148,7 +161,7 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 72
+      "default": 80
     },
     {
       "type": "range",
@@ -158,45 +171,51 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 72
+      "default": 80
     }
   ],
   "presets": [
     {
-      "name": "Service pricing"
+      "name": "Booking hero + embed"
     }
   ]
 }
 {% endschema %}
 
 {% stylesheet %}
-  .service-pricing__content {
+  .service-booking__content {
     display: grid;
-    gap: var(--gap-md);
-    max-width: 720px;
+    gap: var(--gap-lg);
+    max-width: 800px;
   }
 
-  .service-pricing__intro {
+  .service-booking__intro {
     display: grid;
     gap: var(--gap-sm);
   }
 
-  .service-pricing__subheading {
+  .service-booking__eyebrow {
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .service-booking__subheading {
     margin: 0;
     color: var(--color-foreground);
   }
 
-  .service-pricing__actions {
+  .service-booking__actions {
     display: flex;
-    gap: var(--gap-md);
     flex-wrap: wrap;
-    margin-top: var(--gap-sm);
+    gap: var(--gap-md);
   }
 
-  .service-pricing__embed {
-    margin-top: var(--gap-lg);
-    padding: var(--padding-lg);
-    border: 1px dashed var(--color-border);
+  .service-booking__embed,
+  .service-booking__placeholder {
+    padding: var(--padding-xl);
     border-radius: var(--style-border-radius-cards);
+    border: 1px dashed var(--color-border);
   }
 {% endstylesheet %}
