@@ -18,6 +18,9 @@
   assign drawer_search = drawer_search | default: ''
   assign drawer_actions = drawer_actions | default: ''
   assign drawer_phone = phone_drawer | default: ''
+  assign hide_navigation = hide_navigation | default: false
+  assign drawer_toggle_label = drawer_toggle_label | default: 'accessibility.menu' | t
+  assign nav_links_size = 0
 
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
@@ -37,6 +40,10 @@
   assign eager_loading = false
   if section.index == blank
     assign eager_loading = true
+  endif
+
+  if hide_navigation == false and linklist != blank
+    assign nav_links_size = linklist.links.size
   endif
 %}
 
@@ -59,7 +66,7 @@
   >
     <summary
       class="header__icon header__icon--menu header__icon--summary"
-      aria-label="{{ 'accessibility.menu' | t }}"
+      aria-label="{{ drawer_toggle_label }}"
       on:click="/toggle"
     >
       <span class="svg-wrapper header-drawer-icon header-drawer-icon--open">
@@ -87,13 +94,14 @@
           {{- 'icon-close.svg' | inline_asset_content -}}
         </span>
       </button>
-      <nav
-        class="menu-drawer__navigation"
-        style="
-          {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
-          {%- render 'submenu-font-styles', settings: block_settings %}
-        "
-      >
+      {% if hide_navigation == false %}
+        <nav
+          class="menu-drawer__navigation"
+          style="
+            {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
+            {%- render 'submenu-font-styles', settings: block_settings %}
+          "
+        >
         <ul
           class="menu-drawer__menu has-submenu"
           role="list"
@@ -561,7 +569,8 @@
             {%- endfor -%}
           {% endif %}
         </ul>
-      </nav>
+        </nav>
+      {% endif %}
 
       {% if drawer_search != '' or drawer_phone != '' or drawer_actions != '' %}
         <div class="header-drawer__extras">
@@ -580,82 +589,84 @@
           {% endif %}
         </div>
       {% endif %}
-      <div
-        class="menu-drawer__utility-links menu-drawer__animated-element"
-        style="--menu-drawer-animation-index: {{ linklist.links.size }};"
-      >
-        {% liquid
-          assign show_language = section.settings.show_language
-          if localization.available_languages.size <= 1
-            assign show_language = false
-          endif
-
-          assign show_country = section.settings.show_country
-          if localization.available_countries.size <= 1
-            assign show_country = false
-          endif
-        %}
-        {% if data_header_drawer_type == 'mobile-drawer' and show_country or show_language %}
-          {% render 'drawer-localization',
-            show_country: show_country,
-            show_language: show_language,
-            country_style: section.settings.country_selector_style
-          %}
-        {%- endif -%}
-      </div>
-
-      {% liquid
-        if block_settings.menu_style == 'featured_collections'
-          assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
-        endif
-
-        if eager_loading and block_settings.menu_style == 'featured_products'
-          for link in linklist.links
-            if link.type == 'collection_link'
-              assign collection_linklist = link
-              assign top_level_featured_products_collection = collection_linklist.object
-              break
-            elsif link.type == 'catalog_link' or link.type == 'collections_link'
-              assign top_level_featured_products_collection = collections.all
-              break
-            endif
-          endfor
-        endif
-      -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
+      {% if hide_navigation == false %}
         <div
-          class="menu-drawer__featured-content"
-          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
+          class="menu-drawer__utility-links menu-drawer__animated-element"
+          style="--menu-drawer-animation-index: {{ nav_links_size }};"
         >
-          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
-            {% if top_level_featured_collections.size > 0 %}
-              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
-                  {% render 'resource-card',
-                    resource: collection.object,
-                    resource_type: 'collection',
-                    style: 'overlay',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
-            {% elsif top_level_featured_products_collection.products_count > 0 %}
-              {% paginate top_level_featured_products_collection.products by max_featured_items %}
-                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
-                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+          {% liquid
+            assign show_language = section.settings.show_language
+            if localization.available_languages.size <= 1
+              assign show_language = false
+            endif
+
+            assign show_country = section.settings.show_country
+            if localization.available_countries.size <= 1
+              assign show_country = false
+            endif
+          %}
+          {% if data_header_drawer_type == 'mobile-drawer' and show_country or show_language %}
+            {% render 'drawer-localization',
+              show_country: show_country,
+              show_language: show_language,
+              country_style: section.settings.country_selector_style
+            %}
+          {%- endif -%}
+        </div>
+
+        {% liquid
+          if block_settings.menu_style == 'featured_collections'
+            assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
+          endif
+
+          if eager_loading and block_settings.menu_style == 'featured_products'
+            for link in linklist.links
+              if link.type == 'collection_link'
+                assign collection_linklist = link
+                assign top_level_featured_products_collection = collection_linklist.object
+                break
+              elsif link.type == 'catalog_link' or link.type == 'collections_link'
+                assign top_level_featured_products_collection = collections.all
+                break
+              endif
+            endfor
+          endif
+        -%}
+        {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
+          <div
+            class="menu-drawer__featured-content"
+            style="--menu-drawer-animation-index: {{ nav_links_size | plus: 1 }};"
+          >
+            <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
+              {% if top_level_featured_collections.size > 0 %}
+                {%- for collection in top_level_featured_collections limit: max_featured_items -%}
+                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
                     {% render 'resource-card',
-                      resource: product,
-                      resource_type: 'product',
+                      resource: collection.object,
+                      resource_type: 'collection',
+                      style: 'overlay',
                       image_aspect_ratio: ratio,
                       image_sizes: 'auto, 400px'
                     %}
                   </li>
                 {%- endfor -%}
-              {% endpaginate %}
-            {% endif %}
-          </ul>
-        </div>
+              {% elsif top_level_featured_products_collection.products_count > 0 %}
+                {% paginate top_level_featured_products_collection.products by max_featured_items %}
+                  {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
+                    <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                      {% render 'resource-card',
+                        resource: product,
+                        resource_type: 'product',
+                        image_aspect_ratio: ratio,
+                        image_sizes: 'auto, 400px'
+                      %}
+                    </li>
+                  {%- endfor -%}
+                {% endpaginate %}
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
       {% endif %}
     </div>
     <div
@@ -724,11 +735,14 @@
     display: flex;
     min-height: 60px;
     align-items: center;
-    margin-inline-start: auto;
 
     @media screen and (min-width: 750px) {
       min-height: 0;
     }
+  }
+
+  .header__drawer--actions {
+    margin-inline-start: auto;
   }
 
   .header--compact .header__drawer {

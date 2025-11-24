@@ -5,7 +5,7 @@
   assign right = ''
 
   if first != blank
-    assign right = 'first ' | append: right
+    assign left = 'first ' | append: left
   endif
 
   for item in order
@@ -16,6 +16,10 @@
 
     case item
       when 'actions'
+        assign item_column = 'right'
+      when 'utility_drawer'
+        assign item_column = 'right'
+      when 'phone'
         assign item_column = 'right'
     endcase
 
@@ -74,6 +78,8 @@
               {{ mobile_search }}
             {% when 'actions' %}
               {{ actions }}
+            {% when 'utility_drawer' %}
+              {{ utility_drawer }}
           {% endcase %}
         {% endunless %}
       {% endfor %}

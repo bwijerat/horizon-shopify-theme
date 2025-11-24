@@ -13,7 +13,7 @@
 {% case variant %}
   {% when 'mobile' %}
     <div
-      class="header__drawer desktop:hidden"
+      class="header__drawer header__drawer--navigation desktop:hidden"
       ref="headerDrawerContainer"
       {{ block.shopify_attributes }}
     >
@@ -24,6 +24,24 @@
         drawer_search: drawer_search,
         drawer_actions: drawer_actions,
         phone_drawer: phone_drawer
+      %}
+    </div>
+
+  {% when 'actions_drawer' %}
+    <div
+      class="header__drawer header__drawer--actions desktop:hidden"
+      ref="headerDrawerActions"
+      {{ block.shopify_attributes }}
+    >
+      {% render 'header-drawer',
+        class: 'header__drawer--mobile',
+        linklist: block_settings.menu,
+        data_header_drawer_type: 'mobile-actions-drawer',
+        drawer_search: drawer_search,
+        drawer_actions: drawer_actions,
+        phone_drawer: phone_drawer,
+        hide_navigation: true,
+        drawer_toggle_label: 'Actions menu'
       %}
     </div>
 

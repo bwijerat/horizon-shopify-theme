@@ -113,6 +113,8 @@
   {% endif %}
 {% endif %}
 
+{% assign order = order | append: ',utility_drawer' %}
+
 {% capture search %}
   {% render 'search', style: search_style, class: search_class %}
 {% endcapture %}
@@ -124,10 +126,14 @@
 {% endcapture %}
 
 {% capture mobile_menu %}
+  {% content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile' %}
+{% endcapture %}
+
+{% capture utility_drawer %}
   {% content_for 'block',
     type: '_header-menu',
     id: 'header-menu',
-    variant: 'mobile',
+    variant: 'actions_drawer',
     drawer_search: drawer_search,
     drawer_actions: drawer_actions,
     phone_drawer: phone_drawer
@@ -282,6 +288,7 @@
         localization: localization_markup,
         search: search,
         mobile_search: mobile_search,
+        utility_drawer: utility_drawer,
         book_service: book_service
       %}
     {% endcapture %}
@@ -515,7 +522,7 @@
   }
 
   @media screen and (max-width: 749px) {
-    .header__drawer {
+    .header__drawer--actions {
       margin-inline-start: auto;
     }
   }
