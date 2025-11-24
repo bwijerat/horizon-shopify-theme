@@ -2,22 +2,77 @@
   "sections": {
     "service_hero": {
       "type": "service-hero",
+      "blocks": {
+        "hero_eyebrow": {
+          "type": "hero_text",
+          "settings": {
+            "text_role": "eyebrow",
+            "text": "<p>HomeBase Support Services</p>",
+            "type_preset": "paragraph",
+            "case": "uppercase"
+          }
+        },
+        "hero_heading": {
+          "type": "hero_text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>On-Demand Home Services You Can Rely On</p>",
+            "type_preset": "h1"
+          }
+        },
+        "hero_subheading": {
+          "type": "hero_text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>Snow removal, lawn care, IT support, and pet care for homeowners in Ontario.</p>",
+            "type_preset": "paragraph"
+          }
+        },
+        "hero_primary_button": {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "link": "/pages/contact",
+            "use_booking_link": false,
+            "theme": "primary"
+          }
+        },
+        "hero_booking_button": {
+          "type": "button",
+          "settings": {
+            "label": "Book Service",
+            "link": "/pages/book-service",
+            "use_booking_link": false,
+            "theme": "booking"
+          }
+        },
+        "hero_secondary_button": {
+          "type": "button",
+          "settings": {
+            "label": "View Services",
+            "link": "/collections/services",
+            "theme": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "hero_eyebrow",
+        "hero_heading",
+        "hero_subheading",
+        "hero_primary_button",
+        "hero_booking_button",
+        "hero_secondary_button"
+      ],
       "settings": {
-        "eyebrow": "HomeBase Support Services",
-        "heading": "On-Demand Home Services You Can Rely On",
-        "subheading": "Snow removal, lawn care, IT support, and pet care for homeowners in Ontario.",
-        "primary_label": "Request a Quote",
-        "primary_link": "/pages/contact",
-        "primary_new_tab": false,
-        "booking_label": "Book Service",
-        "booking_link": "/pages/book-service",
-        "booking_new_tab": false,
-        "secondary_label": "View Services",
-        "secondary_link": "/collections/services",
-        "secondary_new_tab": false,
+        "heading_gap": 16,
+        "subheading_button_gap": 24,
+        "button_gap": 16,
+        "content_media_gap": 64,
         "image": "",
         "image_alt": "",
-        "color_scheme": "scheme-6",
+        "image_lock_aspect": true,
+        "image_size_locked": 100,
+        "color_scheme": "scheme-4",
         "padding-block-start": 96,
         "padding-block-end": 96
       }
