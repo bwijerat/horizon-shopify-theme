@@ -223,6 +223,22 @@
     "testimonials": {
       "type": "service-testimonials",
       "blocks": {
+        "testimonials_heading": {
+          "type": "text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>Trusted by homeowners</p>",
+            "type_preset": "h2"
+          }
+        },
+        "testimonials_subheading": {
+          "type": "text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>Responsive, trustworthy service for snow, lawn, IT, and pet care.</p>",
+            "type_preset": "paragraph"
+          }
+        },
         "t1": {
           "type": "testimonial",
           "settings": {
@@ -249,17 +265,23 @@
             "location": "IT Support",
             "color_scheme": "scheme-2"
           }
+        },
+        "testimonials_area": {
+          "type": "area_note",
+          "settings": {
+            "text": "Serving homeowners across Ontario, Canada."
+          }
         }
       },
       "block_order": [
+        "testimonials_heading",
+        "testimonials_subheading",
         "t1",
         "t2",
-        "t3"
+        "t3",
+        "testimonials_area"
       ],
       "settings": {
-        "heading": "Trusted by homeowners",
-        "subheading": "Responsive, trustworthy service for snow, lawn, IT, and pet care.",
-        "service_area": "Serving homeowners across Ontario, Canada.",
         "color_scheme": "scheme-1",
         "padding-block-start": 80,
         "padding-block-end": 80
