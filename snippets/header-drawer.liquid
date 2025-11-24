@@ -19,8 +19,11 @@
   assign drawer_actions = drawer_actions | default: ''
   assign drawer_phone = phone_drawer | default: ''
   assign hide_navigation = hide_navigation | default: false
-  assign drawer_toggle_label = drawer_toggle_label | default: 'accessibility.menu' | t
   assign nav_links_size = 0
+  assign drawer_toggle_label = drawer_toggle_label | default: ''
+  if drawer_toggle_label == ''
+    assign drawer_toggle_label = 'accessibility.menu' | t
+  endif
 
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
@@ -688,27 +691,59 @@
     padding: var(--padding-lg);
   }
 
-  .header-drawer__search-wrapper :is(form, .search) {
+  .header-drawer__extras > * + * {
+    margin-top: var(--gap-lg);
+  }
+
+  .header-drawer__search-wrapper,
+  .header-drawer__phone-wrapper {
     width: 100%;
   }
 
-  .header-drawer__phone-wrapper,
-  .header-drawer__phone {
-    font-weight: 600;
-    color: var(--color-foreground);
-    text-decoration: none;
-  }
-
-  .header-drawer__actions {
+  .header-drawer__quick-links {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-sm);
+    gap: var(--gap-md);
   }
 
-  .header-drawer__action {
+  .header-drawer__quick-link {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
     text-decoration: none;
     color: var(--color-foreground);
     font-weight: 600;
+    width: 100%;
+  }
+
+  .header-drawer__quick-link--button {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .header-drawer__quick-link--button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  .header-drawer__quick-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-drawer__quick-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header-drawer__quick-label {
+    font-size: var(--font-size--md);
   }
 
   @media screen and (min-width: 750px) {

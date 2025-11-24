@@ -59,7 +59,17 @@
 
 {% capture phone_drawer %}
   {% if phone_href != '' %}
-    <a class="header__phone header-drawer__phone" href="tel:{{ phone_href }}">{{ settings.business_phone }}</a>
+    <a class="header-drawer__quick-link" href="tel:{{ phone_href }}">
+      <span class="header-drawer__quick-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M19 15.5c-1.15 0-2.27-.18-3.32-.52a1.47 1.47 0 0 0-1.48.35l-1.18 1.2a15.81 15.81 0 0 1-6-6l1.19-1.2c.42-.42.57-1.03.39-1.6A11.16 11.16 0 0 1 8.5 5c0-.83-.67-1.5-1.5-1.5H5c-.83 0-1.5.67-1.5 1.5 0 9.11 7.39 16.5 16.5 16.5.83 0 1.5-.67 1.5-1.5V17c0-.83-.67-1.5-1.5-1.5Z"
+          />
+        </svg>
+      </span>
+      <span class="header-drawer__quick-label">{{ settings.business_phone }}</span>
+    </a>
   {% endif %}
 {% endcapture %}
 
@@ -76,16 +86,22 @@
 {% endcapture %}
 
 {% capture drawer_actions %}
-  <div class="header-drawer__actions">
-      {% if shop.customer_accounts_enabled %}
-        <a class="header-drawer__action" href="{{ routes.account_url }}">
-          {{ 'customer.account.title' | t }}
-        </a>
-      {% endif %}
-      <a class="header-drawer__action" href="{{ routes.cart_url }}">
-        {{ 'accessibility.cart' | t }}
+  <div class="header-drawer__quick-links">
+    {% if shop.customer_accounts_enabled %}
+      <a class="header-drawer__quick-link" href="{{ routes.account_url }}">
+        <span class="header-drawer__quick-icon">
+          {{- 'icon-account.svg' | inline_asset_content -}}
+        </span>
+        <span class="header-drawer__quick-label">{{ 'content.account_profile' | t }}</span>
       </a>
-    </div>
+    {% endif %}
+    <a class="header-drawer__quick-link" href="{{ routes.cart_url }}">
+      <span class="header-drawer__quick-icon">
+        {{- 'icon-cart.svg' | inline_asset_content -}}
+      </span>
+      <span class="header-drawer__quick-label">{{ 'accessibility.cart' | t }}</span>
+    </a>
+  </div>
 {% endcapture %}
 
 {% comment %} Handle localization positioning {% endcomment %}
@@ -121,13 +137,24 @@
 
 {% capture drawer_search %}
   {% if search_style != 'none' %}
-    {% render 'search', style: search_style, class: 'header-drawer__search' %}
+    <button
+      class="header-drawer__quick-link header-drawer__quick-link--button"
+      type="button"
+      on:click="#search-modal/showDialog"
+    >
+      <span class="header-drawer__quick-icon">
+        {{- 'icon-search.svg' | inline_asset_content -}}
+      </span>
+      <span class="header-drawer__quick-label">{{ 'general.search' | t }}</span>
+    </button>
   {% endif %}
 {% endcapture %}
 
 {% capture mobile_menu %}
   {% content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile' %}
 {% endcapture %}
+
+{% assign actions_drawer_label = 'Quick actions menu' %}
 
 {% capture utility_drawer %}
   {% content_for 'block',
@@ -136,7 +163,8 @@
     variant: 'actions_drawer',
     drawer_search: drawer_search,
     drawer_actions: drawer_actions,
-    phone_drawer: phone_drawer
+    phone_drawer: phone_drawer,
+    drawer_toggle_label: actions_drawer_label
   %}
 {% endcapture %}
 
@@ -522,8 +550,15 @@
   }
 
   @media screen and (max-width: 749px) {
+    .header__drawer--navigation {
+      grid-area: leftA;
+      justify-self: flex-start;
+    }
+
     .header__drawer--actions {
-      margin-inline-start: auto;
+      grid-area: rightB;
+      justify-self: flex-end;
+      margin-inline-start: 0;
     }
   }
 
