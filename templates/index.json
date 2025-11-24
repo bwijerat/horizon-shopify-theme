@@ -80,6 +80,22 @@
     "core_services": {
       "type": "service-core-services",
       "blocks": {
+        "core_heading": {
+          "type": "text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>Core Services</p>",
+            "type_preset": "h2"
+          }
+        },
+        "core_subheading": {
+          "type": "text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>Snow Removal, Lawn Care, IT Support, and Pet Care tailored for homeowners.</p>",
+            "type_preset": "paragraph"
+          }
+        },
         "snow": {
           "type": "service",
           "settings": {
@@ -134,14 +150,14 @@
         }
       },
       "block_order": [
+        "core_heading",
+        "core_subheading",
         "snow",
         "lawn",
         "it",
         "pet"
       ],
       "settings": {
-        "heading": "Core Services",
-        "subheading": "Snow Removal, Lawn Care, IT Support, and Pet Care tailored for homeowners.",
         "color_scheme": "scheme-1",
         "padding-block-start": 84,
         "padding-block-end": 84
