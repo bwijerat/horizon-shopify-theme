@@ -577,14 +577,14 @@
 
       {% if drawer_search != '' or drawer_phone != '' or drawer_actions != '' %}
         <div class="header-drawer__extras">
-          {% if drawer_search != '' %}
-            <div class="header-drawer__search-wrapper">
-              {{ drawer_search }}
-            </div>
-          {% endif %}
           {% if drawer_phone != '' %}
             <div class="header-drawer__phone-wrapper">
               {{ drawer_phone }}
+            </div>
+          {% endif %}
+          {% if drawer_search != '' %}
+            <div class="header-drawer__search-wrapper">
+              {{ drawer_search }}
             </div>
           {% endif %}
           {% if drawer_actions != '' %}
@@ -730,8 +730,8 @@
   }
 
   .header-drawer__quick-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -743,7 +743,7 @@
   }
 
   .header-drawer__quick-label {
-    font-size: var(--font-size--md);
+    font-size: var(--font-size--lg);
   }
 
   @media screen and (min-width: 750px) {
