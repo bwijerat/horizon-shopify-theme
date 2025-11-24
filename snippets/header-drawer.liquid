@@ -577,19 +577,11 @@
 
       {% if drawer_search != '' or drawer_phone != '' or drawer_actions != '' %}
         <div class="header-drawer__extras">
-          {% if drawer_phone != '' %}
-            <div class="header-drawer__phone-wrapper">
-              {{ drawer_phone }}
-            </div>
-          {% endif %}
-          {% if drawer_search != '' %}
-            <div class="header-drawer__search-wrapper">
-              {{ drawer_search }}
-            </div>
-          {% endif %}
-          {% if drawer_actions != '' %}
+          <ul class="menu-drawer__menu menu-drawer__menu--quick list-unstyled" role="list">
+            {{ drawer_phone }}
+            {{ drawer_search }}
             {{ drawer_actions }}
-          {% endif %}
+          </ul>
         </div>
       {% endif %}
       {% if hide_navigation == false %}
@@ -685,42 +677,21 @@
   }
 
   .header-drawer__extras {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-lg);
     padding: var(--padding-lg);
   }
 
-  .header-drawer__extras > * + * {
-    margin-top: var(--gap-lg);
+  .header-drawer__extras .menu-drawer__menu {
+    gap: 0;
   }
 
-  .header-drawer__search-wrapper,
-  .header-drawer__phone-wrapper {
+  .header-drawer__quick-list-item {
     width: 100%;
-  }
-
-  .header-drawer__quick-links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-xs);
   }
 
   .header-drawer__quick-link {
     display: flex;
     align-items: center;
     gap: var(--gap-md);
-    padding: var(--padding-2xs) 0;
-    min-height: calc(2 * var(--padding-lg) + var(--icon-size-xs));
-    text-decoration: none;
-    width: 100%;
-    color: var(--menu-top-level-font-color);
-    font-family: var(--menu-top-level-font-family);
-    font-style: var(--menu-top-level-font-style);
-    font-weight: var(--menu-top-level-font-weight);
-    font-size: var(--menu-top-level-font-size);
-    line-height: var(--menu-top-level-font-line-height);
-    text-transform: var(--menu-top-level-font-case);
   }
 
   .header-drawer__quick-link--button {

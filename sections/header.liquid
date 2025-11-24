@@ -59,17 +59,19 @@
 
 {% capture phone_drawer %}
   {% if phone_href != '' %}
-    <a class="header-drawer__quick-link" href="tel:{{ phone_href }}">
-      <span class="header-drawer__quick-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path
-            fill="currentColor"
-            d="M19 15.5c-1.15 0-2.27-.18-3.32-.52a1.47 1.47 0 0 0-1.48.35l-1.18 1.2a15.81 15.81 0 0 1-6-6l1.19-1.2c.42-.42.57-1.03.39-1.6A11.16 11.16 0 0 1 8.5 5c0-.83-.67-1.5-1.5-1.5H5c-.83 0-1.5.67-1.5 1.5 0 9.11 7.39 16.5 16.5 16.5.83 0 1.5-.67 1.5-1.5V17c0-.83-.67-1.5-1.5-1.5Z"
-          />
-        </svg>
-      </span>
-      <span class="header-drawer__quick-label">{{ settings.business_phone }}</span>
-    </a>
+    <li class="menu-drawer__list-item header-drawer__quick-list-item">
+      <a class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link" href="tel:{{ phone_href }}">
+        <span class="svg-wrapper header-drawer__quick-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M19 15.5c-1.15 0-2.27-.18-3.32-.52a1.47 1.47 0 0 0-1.48.35l-1.18 1.2a15.81 15.81 0 0 1-6-6l1.19-1.2c.42-.42.57-1.03.39-1.6A11.16 11.16 0 0 1 8.5 5c0-.83-.67-1.5-1.5-1.5H5c-.83 0-1.5.67-1.5 1.5 0 9.11 7.39 16.5 16.5 16.5.83 0 1.5-.67 1.5-1.5V17c0-.83-.67-1.5-1.5-1.5Z"
+            />
+          </svg>
+        </span>
+        <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">{{ settings.business_phone }}</span>
+      </a>
+    </li>
   {% endif %}
 {% endcapture %}
 
@@ -86,22 +88,24 @@
 {% endcapture %}
 
 {% capture drawer_actions %}
-  <div class="header-drawer__quick-links">
-    {% if shop.customer_accounts_enabled %}
-      <a class="header-drawer__quick-link" href="{{ routes.account_url }}">
-        <span class="header-drawer__quick-icon">
+  {% if shop.customer_accounts_enabled %}
+    <li class="menu-drawer__list-item header-drawer__quick-list-item">
+      <a class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link" href="{{ routes.account_url }}">
+        <span class="svg-wrapper header-drawer__quick-icon">
           {{- 'icon-account.svg' | inline_asset_content -}}
         </span>
-        <span class="header-drawer__quick-label">{{ 'content.account_profile' | t }}</span>
+        <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">{{ 'content.account_profile' | t }}</span>
       </a>
-    {% endif %}
-    <a class="header-drawer__quick-link" href="{{ routes.cart_url }}">
-      <span class="header-drawer__quick-icon">
+    </li>
+  {% endif %}
+  <li class="menu-drawer__list-item header-drawer__quick-list-item">
+    <a class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link" href="{{ routes.cart_url }}">
+      <span class="svg-wrapper header-drawer__quick-icon">
         {{- 'icon-cart.svg' | inline_asset_content -}}
       </span>
-      <span class="header-drawer__quick-label">{{ 'accessibility.cart' | t }}</span>
+      <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">{{ 'accessibility.cart' | t }}</span>
     </a>
-  </div>
+  </li>
 {% endcapture %}
 
 {% comment %} Handle localization positioning {% endcomment %}
@@ -137,16 +141,18 @@
 
 {% capture drawer_search %}
   {% if search_style != 'none' %}
-    <button
-      class="header-drawer__quick-link header-drawer__quick-link--button"
-      type="button"
-      on:click="#search-modal/showDialog"
-    >
-      <span class="header-drawer__quick-icon">
-        {{- 'icon-search.svg' | inline_asset_content -}}
-      </span>
-      <span class="header-drawer__quick-label">Search</span>
-    </button>
+    <li class="menu-drawer__list-item header-drawer__quick-list-item">
+      <button
+        class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link header-drawer__quick-link--button"
+        type="button"
+        on:click="#search-modal/showDialog"
+      >
+        <span class="svg-wrapper header-drawer__quick-icon">
+          {{- 'icon-search.svg' | inline_asset_content -}}
+        </span>
+        <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">Search</span>
+      </button>
+    </li>
   {% endif %}
 {% endcapture %}
 
