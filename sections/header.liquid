@@ -87,14 +87,19 @@
   </div>
 {% endcapture %}
 
+{% assign account_link = routes.account_url %}
+{% if customer == blank %}
+  {% assign account_link = routes.account_login_url %}
+{% endif %}
+
 {% capture drawer_actions %}
   {% if shop.customer_accounts_enabled %}
     <li class="menu-drawer__list-item header-drawer__quick-list-item">
-      <a class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link" href="{{ routes.account_url }}">
+      <a class="menu-drawer__menu-item menu-drawer__menu-item--mainlist header-drawer__quick-link" href="{{ account_link }}">
         <span class="svg-wrapper header-drawer__quick-icon">
           {{- 'icon-account.svg' | inline_asset_content -}}
         </span>
-        <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">{{ 'content.account_profile' | t }}</span>
+        <span class="menu-drawer__menu-item-text wrap-text header-drawer__quick-label">{{ 'customer.account.title' | t }}</span>
       </a>
     </li>
   {% endif %}
