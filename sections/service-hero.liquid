@@ -1,8 +1,104 @@
-{%- liquid
-  assign section_id = 'service-hero-' | append: section.id
--%}
+{%- assign section_id = 'service-hero-' | append: section.id -%}
 
-<div class="section-wrapper color-{{ section.settings.color_scheme }}">
+{% capture eyebrow_typography_json -%}
+  {
+    "type_preset": {{ section.settings.eyebrow_type_preset | json }},
+    "font": {{ section.settings.eyebrow_font | json }},
+    "font_size": {{ section.settings.eyebrow_font_size | json }},
+    "line_height": {{ section.settings.eyebrow_line_height | json }},
+    "letter_spacing": {{ section.settings.eyebrow_letter_spacing | json }},
+    "case": {{ section.settings.eyebrow_case | json }},
+    "wrap": {{ section.settings.eyebrow_wrap | json }},
+    "color": {{ section.settings.eyebrow_color | json }}
+  }
+{%- endcapture %}
+{%- assign eyebrow_typography = eyebrow_typography_json | parse_json -%}
+
+{% capture heading_typography_json -%}
+  {
+    "type_preset": {{ section.settings.heading_type_preset | json }},
+    "font": {{ section.settings.heading_font | json }},
+    "font_size": {{ section.settings.heading_font_size | json }},
+    "line_height": {{ section.settings.heading_line_height | json }},
+    "letter_spacing": {{ section.settings.heading_letter_spacing | json }},
+    "case": {{ section.settings.heading_case | json }},
+    "wrap": {{ section.settings.heading_wrap | json }},
+    "color": {{ section.settings.heading_color | json }}
+  }
+{%- endcapture %}
+{%- assign heading_typography = heading_typography_json | parse_json -%}
+
+{% capture subheading_typography_json -%}
+  {
+    "type_preset": {{ section.settings.subheading_type_preset | json }},
+    "font": {{ section.settings.subheading_font | json }},
+    "font_size": {{ section.settings.subheading_font_size | json }},
+    "line_height": {{ section.settings.subheading_line_height | json }},
+    "letter_spacing": {{ section.settings.subheading_letter_spacing | json }},
+    "case": {{ section.settings.subheading_case | json }},
+    "wrap": {{ section.settings.subheading_wrap | json }},
+    "color": {{ section.settings.subheading_color | json }}
+  }
+{%- endcapture %}
+{%- assign subheading_typography = subheading_typography_json | parse_json -%}
+
+{% capture eyebrow_classes -%}
+  {% if section.settings.eyebrow_type_preset == 'custom' %}
+    custom-typography{% if section.settings.eyebrow_font_size != blank %} custom-font-size{% endif %}{% if section.settings.eyebrow_color != blank %} custom-color{% endif %}
+  {% elsif section.settings.eyebrow_color != blank %}
+    custom-color
+  {% endif %}
+{%- endcapture %}
+{%- assign eyebrow_typography_classes = eyebrow_classes | strip -%}
+
+{% capture heading_classes -%}
+  {% if section.settings.heading_type_preset == 'custom' %}
+    custom-typography{% if section.settings.heading_font_size != blank %} custom-font-size{% endif %}{% if section.settings.heading_color != blank %} custom-color{% endif %}
+  {% elsif section.settings.heading_color != blank %}
+    custom-color
+  {% endif %}
+{%- endcapture %}
+{%- assign heading_typography_classes = heading_classes | strip -%}
+
+{% capture subheading_classes -%}
+  {% if section.settings.subheading_type_preset == 'custom' %}
+    custom-typography{% if section.settings.subheading_font_size != blank %} custom-font-size{% endif %}{% if section.settings.subheading_color != blank %} custom-color{% endif %}
+  {% elsif section.settings.subheading_color != blank %}
+    custom-color
+  {% endif %}
+{%- endcapture %}
+{%- assign subheading_typography_classes = subheading_classes | strip -%}
+
+{%- assign has_buttons = section.blocks.size -%}
+
+{% capture background_styles -%}
+  {% if section.settings.background_image != blank %}
+    background-image: url({{ section.settings.background_image | image_url: width: 3840 }});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  {% endif %}
+{%- endcapture %}
+
+{% capture inner_styles -%}
+  --service-hero-inner-gap: {{ section.settings.content_media_gap }}px;
+{%- endcapture %}
+
+{% capture actions_styles -%}
+  --service-hero-actions-gap: {{ section.settings.button_gap }}px;
+  --service-hero-actions-offset: {{ section.settings.subheading_button_gap }}px;
+{%- endcapture %}
+
+{% capture media_styles -%}
+  {% if section.settings.image_lock_aspect %}
+    --service-hero-media-width: {{ section.settings.image_size_locked }}%;
+  {% else %}
+    --service-hero-media-width: {{ section.settings.image_width }}%;
+    --service-hero-media-height: {{ section.settings.image_height }}px;
+  {% endif %}
+{%- endcapture %}
+
+<div class="section-wrapper color-{{ section.settings.color_scheme }} service-hero__wrapper"{% if background_styles != blank %} style="{{ background_styles | strip_newlines }}"{% endif %}>
   <div
     id="{{ section_id }}"
     class="section service-hero page-width spacing-style"
@@ -10,57 +106,93 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    <div class="service-hero__inner">
+    <div class="service-hero__inner" style="{{ inner_styles | strip_newlines }}">
       <div class="service-hero__content">
         {%- if section.settings.eyebrow != blank -%}
-          <p class="service-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+          <p
+            class="service-hero__eyebrow {% if eyebrow_typography_classes != blank %}{{ eyebrow_typography_classes }}{% endif %}"
+            style="{% render 'typography-style', settings: eyebrow_typography, preset: section.settings.eyebrow_type_preset, type: 'body' %}"
+          >
+            {{ section.settings.eyebrow }}
+          </p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h1 class="service-hero__heading h1">{{ section.settings.heading }}</h1>
+          <h1
+            class="service-hero__heading h1 {% if heading_typography_classes != blank %}{{ heading_typography_classes }}{% endif %}"
+            style="{% render 'typography-style', settings: heading_typography, preset: section.settings.heading_type_preset, type: 'heading' %}"
+          >
+            {{ section.settings.heading }}
+          </h1>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
           <p
-            class="service-hero__subheading"
-            style="margin-top: {{ section.settings.heading_gap }}px;"
+            class="service-hero__subheading {% if subheading_typography_classes != blank %}{{ subheading_typography_classes }}{% endif %}"
+            style="{% render 'typography-style', settings: subheading_typography, preset: section.settings.subheading_type_preset, type: 'body' %} margin-top: {{ section.settings.heading_gap }}px;"
           >
             {{ section.settings.subheading }}
           </p>
         {%- endif -%}
-        <div class="service-hero__actions">
-          {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
-            <a
-              class="button"
-              href="{{ section.settings.primary_link }}"
-              {% if section.settings.primary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-            >
-              {{ section.settings.primary_label }}
-            </a>
-          {%- endif -%}
-          {%- assign booking_link = section.settings.booking_link | default: settings.booking_page_link -%}
-          {%- if section.settings.booking_label != blank and booking_link != blank -%}
-            <a
-              class="button button--book"
-              href="{{ booking_link }}"
-              {% if section.settings.booking_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-            >
-              {{ section.settings.booking_label }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
-            <a
-              class="button-secondary"
-              href="{{ section.settings.secondary_link }}"
-              {% if section.settings.secondary_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-            >
-              {{ section.settings.secondary_label }}
-            </a>
-          {%- endif -%}
-        </div>
+        {%- if has_buttons > 0 -%}
+          <div class="service-hero__actions" style="{{ actions_styles | strip_newlines }}">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'button' -%}
+                  {%- liquid
+                    assign block_settings = block.settings
+                    assign button_link = block_settings.link
+                    if button_link == blank and block_settings.use_booking_link
+                      assign button_link = settings.booking_page_link
+                    endif
+
+                    assign button_class = 'button'
+                    case block_settings.theme
+                      when 'secondary'
+                        assign button_class = 'button-secondary'
+                      when 'booking'
+                        assign button_class = 'button button--book'
+                      when 'link'
+                        assign button_class = 'link'
+                      else
+                        assign button_class = 'button'
+                    endcase
+                  -%}
+                  {%- capture button_size_style -%}
+                    {% render 'size-style', settings: block_settings %}
+                  {%- endcapture -%}
+                  <a
+                    {% if button_link == blank %}
+                      role="link"
+                      aria-disabled="true"
+                    {% else %}
+                      href="{{ button_link }}"
+                    {% endif %}
+                    class="service-hero__button size-style {{ button_class }} service-hero__button--{{ block.id }}"
+                    style="{{ button_size_style | strip_newlines }}"
+                    {% if block_settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ block_settings.label }}
+                  </a>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
 
-      <div class="service-hero__media">
+      <div
+        class="service-hero__media {% if section.settings.image_lock_aspect %}service-hero__media--locked{% else %}service-hero__media--unlocked{% endif %}"
+        style="{{ media_styles | strip_newlines }}"
+      >
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '180, 360, 720, 960, 1200, 1500', sizes: '(min-width: 1200px) 50vw, 100vw', alt: section.settings.image_alt | default: section.settings.heading | escape }}
+          {{
+            section.settings.image
+            | image_url: width: 1500
+            | image_tag:
+              loading: 'lazy',
+              widths: '180, 360, 720, 960, 1200, 1500',
+              sizes: '(min-width: 1200px) 50vw, 100vw',
+              alt: section.settings.image_alt | default: section.settings.heading | escape
+          }}
         {%- else -%}
           <div class="service-hero__placeholder">
             <span>{{ 'Image placeholder' | t }}</span>
@@ -76,12 +208,701 @@
   "name": "Service hero",
   "tag": "section",
   "class": "section-wrapper",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Request a quote"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_booking_link",
+          "label": "Use booking page link",
+          "info": "Uses the booking page link found in theme settings when left blank.",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "theme",
+          "label": "Button theme",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "booking",
+              "label": "Booking"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "link",
+              "label": "Link"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "header",
+          "content": "Size"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "options": [
+            {
+              "value": "fit-content",
+              "label": "Fit content"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "range",
+          "id": "custom_width",
+          "label": "Custom width",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 100,
+          "visible_if": "{{ block.settings.width == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "width_mobile",
+          "label": "Mobile width",
+          "options": [
+            {
+              "value": "fit-content",
+              "label": "Fit content"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "range",
+          "id": "custom_width_mobile",
+          "label": "Custom width (mobile)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 100,
+          "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+        }
+      ]
+    }
+  ],
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "HomeBase Support Services"
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow typography"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_type_preset",
+      "label": "Preset",
+      "options": [
+        {
+          "value": "paragraph",
+          "label": "Paragraph"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "paragraph"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_font",
+      "label": "Font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "Body"
+        },
+        {
+          "value": "var(--font-subheading--family)",
+          "label": "Subheading"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-accent--family)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_font_size",
+      "label": "Size",
+      "options": [
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.2rem",
+          "label": "19px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        },
+        {
+          "value": "2rem",
+          "label": "32px"
+        }
+      ],
+      "default": "1.2rem",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_line_height",
+      "label": "Line height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_letter_spacing",
+      "label": "Letter spacing",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_case",
+      "label": "Case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "uppercase",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_wrap",
+      "label": "Wrap",
+      "options": [
+        {
+          "value": "pretty",
+          "label": "Pretty"
+        },
+        {
+          "value": "balance",
+          "label": "Balance"
+        },
+        {
+          "value": "nowrap",
+          "label": "No wrap"
+        }
+      ],
+      "default": "pretty",
+      "visible_if": "{{ section.settings.eyebrow_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_color",
+      "label": "Color",
+      "options": [
+        {
+          "value": "var(--color-foreground)",
+          "label": "Text"
+        },
+        {
+          "value": "var(--color-foreground-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--color-primary)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--color-foreground)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "On-Demand Home Services You Can Rely On"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_type_preset",
+      "label": "Preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "Body"
+        },
+        {
+          "value": "var(--font-subheading--family)",
+          "label": "Subheading"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-accent--family)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--font-heading--family)",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size",
+      "label": "Size",
+      "options": [
+        {
+          "value": "2rem",
+          "label": "32px"
+        },
+        {
+          "value": "2.5rem",
+          "label": "40px"
+        },
+        {
+          "value": "3rem",
+          "label": "48px"
+        },
+        {
+          "value": "3.5rem",
+          "label": "56px"
+        },
+        {
+          "value": "4.5rem",
+          "label": "72px"
+        },
+        {
+          "value": "5.5rem",
+          "label": "88px"
+        },
+        {
+          "value": "7.5rem",
+          "label": "120px"
+        }
+      ],
+      "default": "3.5rem",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_wrap",
+      "label": "Wrap",
+      "options": [
+        {
+          "value": "pretty",
+          "label": "Pretty"
+        },
+        {
+          "value": "balance",
+          "label": "Balance"
+        },
+        {
+          "value": "nowrap",
+          "label": "No wrap"
+        }
+      ],
+      "default": "pretty",
+      "visible_if": "{{ section.settings.heading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_color",
+      "label": "Color",
+      "options": [
+        {
+          "value": "var(--color-foreground-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--color-foreground)",
+          "label": "Text"
+        },
+        {
+          "value": "var(--color-primary)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--color-foreground-heading)"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Snow removal, lawn care, IT support, and pet care for homeowners in your area."
+    },
+    {
+      "type": "header",
+      "content": "Subheading typography"
+    },
+    {
+      "type": "select",
+      "id": "subheading_type_preset",
+      "label": "Preset",
+      "options": [
+        {
+          "value": "paragraph",
+          "label": "Paragraph"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "paragraph"
+    },
+    {
+      "type": "select",
+      "id": "subheading_font",
+      "label": "Font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "Body"
+        },
+        {
+          "value": "var(--font-subheading--family)",
+          "label": "Subheading"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-accent--family)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_size",
+      "label": "Size",
+      "options": [
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        },
+        {
+          "value": "1.25rem",
+          "label": "20px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        },
+        {
+          "value": "2rem",
+          "label": "32px"
+        }
+      ],
+      "default": "1.125rem",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_line_height",
+      "label": "Line height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_letter_spacing",
+      "label": "Letter spacing",
+      "options": [
+        {
+          "value": "tight",
+          "label": "Tight"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "loose",
+          "label": "Loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_case",
+      "label": "Case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_wrap",
+      "label": "Wrap",
+      "options": [
+        {
+          "value": "pretty",
+          "label": "Pretty"
+        },
+        {
+          "value": "balance",
+          "label": "Balance"
+        },
+        {
+          "value": "nowrap",
+          "label": "No wrap"
+        }
+      ],
+      "default": "pretty",
+      "visible_if": "{{ section.settings.subheading_type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "subheading_color",
+      "label": "Color",
+      "options": [
+        {
+          "value": "var(--color-foreground)",
+          "label": "Text"
+        },
+        {
+          "value": "var(--color-foreground-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--color-primary)",
+          "label": "Accent"
+        }
+      ],
+      "default": "var(--color-foreground)"
     },
     {
       "type": "range",
@@ -94,78 +915,101 @@
       "default": 16
     },
     {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "On-Demand Home Services You Can Rely On"
+      "type": "header",
+      "content": "Layout"
     },
     {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Snow removal, lawn care, IT support, and pet care for homeowners in your area."
+      "type": "range",
+      "id": "subheading_button_gap",
+      "label": "Spacing between text and buttons",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24,
+      "info": "Applies even when the subheading is hidden."
     },
     {
-      "type": "text",
-      "id": "primary_label",
-      "label": "Primary CTA label",
-      "default": "Request a Quote"
+      "type": "range",
+      "id": "button_gap",
+      "label": "Spacing between buttons",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
     },
     {
-      "type": "url",
-      "id": "primary_link",
-      "label": "Primary CTA link"
+      "type": "range",
+      "id": "content_media_gap",
+      "label": "Spacing between content and media",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 64
     },
     {
-      "type": "checkbox",
-      "id": "primary_new_tab",
-      "label": "Open primary CTA in new tab",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "secondary_label",
-      "label": "Secondary CTA label",
-      "default": "View Services"
-    },
-    {
-      "type": "url",
-      "id": "secondary_link",
-      "label": "Secondary CTA link"
-    },
-    {
-      "type": "checkbox",
-      "id": "secondary_new_tab",
-      "label": "Open secondary CTA in new tab",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "booking_label",
-      "label": "Booking CTA label",
-      "default": "Book Service"
-    },
-    {
-      "type": "url",
-      "id": "booking_link",
-      "label": "Booking CTA link",
-      "info": "Defaults to the booking page link in theme settings if left blank."
-    },
-    {
-      "type": "checkbox",
-      "id": "booking_new_tab",
-      "label": "Open booking CTA in new tab",
-      "default": false
+      "type": "header",
+      "content": "Media"
     },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Background/feature image"
+      "label": "Foreground image"
     },
     {
       "type": "text",
       "id": "image_alt",
       "label": "Image alt text"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_lock_aspect",
+      "label": "Lock aspect ratio",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "image_size_locked",
+      "label": "Image size",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.image_lock_aspect }}"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image width",
+      "min": 30,
+      "max": 120,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.image_lock_aspect != true }}"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Image height",
+      "min": 200,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 480,
+      "visible_if": "{{ section.settings.image_lock_aspect != true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
     },
     {
       "type": "color_scheme",
@@ -200,7 +1044,31 @@
   ],
   "presets": [
     {
-      "name": "Service hero"
+      "name": "Service hero",
+      "blocks": [
+        {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "theme": "primary"
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "label": "Book Service",
+            "theme": "booking",
+            "use_booking_link": true
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "label": "View Services",
+            "theme": "secondary"
+          }
+        }
+      ]
     }
   ]
 }
@@ -210,15 +1078,21 @@
   .service-hero__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--gap-xxl);
+    gap: var(--service-hero-inner-gap, var(--gap-xxl));
     align-items: center;
   }
 
   .service-hero__eyebrow {
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.2rem;
+    letter-spacing: var(--letter-spacing, 0.04em);
+    text-transform: var(--text-transform, uppercase);
+    font-weight: var(--font-weight, 600);
+    font-size: var(--font-size, 1.2rem);
+    margin: 0;
+  }
+
+  .service-hero__content .custom-color,
+  .service-hero__content .custom-color > :is(h1, h2, h3, h4, h5, h6, p, span, em, strong) {
+    color: var(--color);
   }
 
   .service-hero__heading {
@@ -229,16 +1103,24 @@
     margin: 0;
     color: var(--color-foreground);
     max-width: 44rem;
+    line-height: var(--line-height, 1.5);
   }
 
   .service-hero__actions {
     display: flex;
-    gap: var(--gap-md);
+    gap: var(--service-hero-actions-gap, var(--gap-md));
     flex-wrap: wrap;
+    margin-top: var(--service-hero-actions-offset, var(--gap-md));
+  }
+
+  .service-hero__button {
+    text-decoration: none;
   }
 
   .service-hero__media {
     width: 100%;
+    max-width: var(--service-hero-media-width, 100%);
+    justify-self: center;
   }
 
   .service-hero__media img {
@@ -246,6 +1128,10 @@
     height: auto;
     border-radius: var(--style-border-radius-cards);
     object-fit: cover;
+  }
+
+  .service-hero__media--unlocked img {
+    height: var(--service-hero-media-height, auto);
   }
 
   .service-hero__placeholder {
