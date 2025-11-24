@@ -166,6 +166,22 @@
     "steps": {
       "type": "service-how-it-works",
       "blocks": {
+        "steps_heading": {
+          "type": "text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>How it works</p>",
+            "type_preset": "h2"
+          }
+        },
+        "steps_subheading": {
+          "type": "text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>Simple, transparent steps for every service request.</p>",
+            "type_preset": "paragraph"
+          }
+        },
         "step1": {
           "type": "step",
           "settings": {
@@ -192,13 +208,13 @@
         }
       },
       "block_order": [
+        "steps_heading",
+        "steps_subheading",
         "step1",
         "step2",
         "step3"
       ],
       "settings": {
-        "heading": "How it works",
-        "subheading": "Simple, transparent steps for every service request.",
         "color_scheme": "scheme-1",
         "padding-block-start": 80,
         "padding-block-end": 80

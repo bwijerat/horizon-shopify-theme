@@ -5,33 +5,40 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    <div
-      class="service-steps__header"
-      style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
-    >
-      {%- if section.settings.heading != blank -%}
-        <h2 class="service-steps__heading h2">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.subheading != blank -%}
-        <p class="service-steps__subheading">
-          {{ section.settings.subheading }}
-        </p>
-      {%- endif -%}
-    </div>
+    {%- assign header_blocks = section.blocks | where: 'type', 'text' -%}
+    {%- assign step_blocks = section.blocks | where: 'type', 'step' -%}
 
-    <div class="service-steps__grid">
-      {%- for block in section.blocks -%}
-        <div class="service-steps__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
-          <div class="service-steps__badge">{{ forloop.index }}</div>
-          {%- if block.settings.title != blank -%}
-            <h3 class="service-steps__title h4">{{ block.settings.title }}</h3>
-          {%- endif -%}
-          {%- if block.settings.description != blank -%}
-            <p class="service-steps__description">{{ block.settings.description }}</p>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
-    </div>
+    {%- if header_blocks.size > 0 -%}
+      <div
+        class="service-steps__header"
+        style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
+      >
+        {%- for block in header_blocks -%}
+          {%- capture text_classes -%}
+            service-steps__text service-steps__text--{{ block.settings.text_role | default: 'body' }}
+          {%- endcapture -%}
+          {% render 'text', block: block, class: text_classes | strip %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if step_blocks.size > 0 -%}
+      <div class="service-steps__grid">
+        {%- assign step_index = 0 -%}
+        {%- for block in step_blocks -%}
+          {%- assign step_index = step_index | plus: 1 -%}
+          <div class="service-steps__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+            <div class="service-steps__badge">{{ step_index }}</div>
+            {%- if block.settings.title != blank -%}
+              <h3 class="service-steps__title h4">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="service-steps__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -40,20 +47,8 @@
   "name": "How it works (3-step)",
   "tag": "section",
   "class": "section-wrapper",
-  "max_blocks": 3,
+  "max_blocks": 12,
   "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "How it works"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Tell us what you need, we confirm details, then deliver reliable service."
-    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -121,6 +116,347 @@
   ],
   "blocks": [
     {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "text_role",
+          "label": "Text role",
+          "options": [
+            {
+              "value": "heading",
+              "label": "Heading"
+            },
+            {
+              "value": "subheading",
+              "label": "Subheading"
+            },
+            {
+              "value": "body",
+              "label": "Body"
+            }
+          ],
+          "default": "body"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "options": [
+            {
+              "value": "fit-content",
+              "label": "Fit content"
+            },
+            {
+              "value": "100%",
+              "label": "Fill width"
+            }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "select",
+          "id": "max_width",
+          "label": "Max width",
+          "options": [
+            {
+              "value": "narrow",
+              "label": "Narrow"
+            },
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "none",
+              "label": "No limit"
+            }
+          ],
+          "default": "normal"
+        },
+        {
+          "type": "text_alignment",
+          "id": "alignment",
+          "label": "Alignment",
+          "default": "left",
+          "visible_if": "{{ block.settings.width == '100%' }}"
+        },
+        {
+          "type": "header",
+          "content": "Typography"
+        },
+        {
+          "type": "select",
+          "id": "type_preset",
+          "label": "Preset",
+          "options": [
+            {
+              "value": "rte",
+              "label": "Default"
+            },
+            {
+              "value": "paragraph",
+              "label": "Paragraph"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ],
+          "default": "rte",
+          "info": "Edit presets in theme settings."
+        },
+        {
+          "type": "select",
+          "id": "font",
+          "label": "Font",
+          "options": [
+            {
+              "value": "var(--font-body--family)",
+              "label": "Body"
+            },
+            {
+              "value": "var(--font-subheading--family)",
+              "label": "Subheading"
+            },
+            {
+              "value": "var(--font-heading--family)",
+              "label": "Heading"
+            },
+            {
+              "value": "var(--font-accent--family)",
+              "label": "Accent"
+            }
+          ],
+          "default": "var(--font-body--family)",
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "font_size",
+          "label": "Size",
+          "options": [
+            {
+              "value": "",
+              "label": "Default"
+            },
+            {
+              "value": "0.875rem",
+              "label": "14px"
+            },
+            {
+              "value": "1rem",
+              "label": "16px"
+            },
+            {
+              "value": "1.25rem",
+              "label": "20px"
+            },
+            {
+              "value": "1.5rem",
+              "label": "24px"
+            },
+            {
+              "value": "2rem",
+              "label": "32px"
+            }
+          ],
+          "default": "1rem",
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "line_height",
+          "label": "Line height",
+          "options": [
+            {
+              "value": "tight",
+              "label": "Tight"
+            },
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "loose",
+              "label": "Loose"
+            }
+          ],
+          "default": "normal",
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "letter_spacing",
+          "label": "Letter spacing",
+          "options": [
+            {
+              "value": "tight",
+              "label": "Tight"
+            },
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "loose",
+              "label": "Loose"
+            }
+          ],
+          "default": "normal",
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "case",
+          "label": "Case",
+          "options": [
+            {
+              "value": "none",
+              "label": "Default"
+            },
+            {
+              "value": "uppercase",
+              "label": "Uppercase"
+            }
+          ],
+          "default": "none",
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "wrap",
+          "label": "Wrap",
+          "options": [
+            {
+              "value": "pretty",
+              "label": "Pretty"
+            },
+            {
+              "value": "balance",
+              "label": "Balance"
+            },
+            {
+              "value": "nowrap",
+              "label": "No wrap"
+            }
+          ],
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Color",
+          "options": [
+            {
+              "value": "var(--color-foreground-heading)",
+              "label": "Heading"
+            },
+            {
+              "value": "var(--color-foreground)",
+              "label": "Body"
+            },
+            {
+              "value": "var(--color-primary)",
+              "label": "Accent"
+            }
+          ],
+          "default": "var(--color-foreground-heading)",
+          "visible_if": "{{ block.settings.type_preset != 'rte' }}"
+        },
+        {
+          "type": "header",
+          "content": "Appearance"
+        },
+        {
+          "type": "checkbox",
+          "id": "background",
+          "label": "Show background",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "alpha": true,
+          "default": "#00000026",
+          "visible_if": "{{ block.settings.background }}"
+        },
+        {
+          "type": "range",
+          "id": "corner_radius",
+          "label": "Corner radius",
+          "default": 0,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "visible_if": "{{ block.settings.background }}"
+        },
+        {
+          "type": "header",
+          "content": "Padding"
+        },
+        {
+          "type": "range",
+          "id": "padding-block-start",
+          "label": "Top padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-block-end",
+          "label": "Bottom padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-start",
+          "label": "Left padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-end",
+          "label": "Right padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
       "type": "step",
       "name": "Step",
       "settings": [
@@ -149,6 +485,22 @@
     {
       "name": "How it works (3-step)",
       "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>How it works</p>",
+            "type_preset": "h2"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>Tell us what you need, we confirm details, then deliver reliable service.</p>",
+            "type_preset": "paragraph"
+          }
+        },
         { "type": "step", "settings": { "title": "Request", "description": "Share the service category, address, and timing." } },
         { "type": "step", "settings": { "title": "We confirm", "description": "We review the request and schedule your visit." } },
         { "type": "step", "settings": { "title": "Service performed", "description": "Trusted pros complete the job and check satisfaction." } }
@@ -166,12 +518,11 @@
     margin-bottom: var(--gap-xl);
   }
 
-  .service-steps__heading {
+  .service-steps__text {
     margin: 0;
   }
 
-  .service-steps__subheading {
-    margin: 0;
+  .service-steps__text--subheading {
     color: var(--color-foreground);
   }
 
