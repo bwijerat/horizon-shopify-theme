@@ -5,46 +5,48 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    <div
-      class="service-area__header"
-      style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
-    >
-      {%- if section.settings.heading != blank -%}
-        <h2 class="service-area__heading h2">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.subheading != blank -%}
-        <p class="service-area__subheading">
-          {{ section.settings.subheading }}
-        </p>
-      {%- endif -%}
-      {%- if section.settings.note != blank -%}
-        <p class="service-area__note">{{ section.settings.note }}</p>
-      {%- endif -%}
-    </div>
+    {%- assign header_blocks = section.blocks | where: 'type', 'text' -%}
+    {%- assign area_cards = section.blocks | where: 'type', 'area' -%}
 
-    <div class="service-area__grid">
-      {%- for block in section.blocks -%}
-        <div class="service-area__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.title != blank -%}
-            <h3 class="service-area__card-title h4">{{ block.settings.title }}</h3>
-          {%- endif -%}
-          {%- if block.settings.description != blank -%}
-            <p class="service-area__card-description">{{ block.settings.description }}</p>
-          {%- endif -%}
-          {%- if block.settings.postal_codes != blank -%}
-            <ul class="service-area__codes">
-              {%- assign codes = block.settings.postal_codes | replace: '\r', '' | split: '\n' -%}
-              {%- for code in codes -%}
-                {%- assign trimmed = code | strip -%}
-                {%- if trimmed != blank -%}
-                  <li>{{ trimmed }}</li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
-    </div>
+    {%- if header_blocks.size > 0 -%}
+      <div
+        class="service-area__header"
+        style="padding-block-start: {{ section.settings.heading_padding_top }}px; padding-block-end: {{ section.settings.heading_padding_bottom }}px; row-gap: {{ section.settings.heading_gap }}px;"
+      >
+        {%- for block in header_blocks -%}
+          {%- capture text_classes -%}
+            service-area__text service-area__text--{{ block.settings.text_role | default: 'body' }}
+          {%- endcapture -%}
+          {% render 'text', block: block, class: text_classes | strip %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if area_cards.size > 0 -%}
+      <div class="service-area__grid">
+        {%- for block in area_cards -%}
+          <div class="service-area__card color-{{ block.settings.color_scheme }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="service-area__card-title h4">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="service-area__card-description">{{ block.settings.description }}</p>
+            {%- endif -%}
+            {%- if block.settings.postal_codes != blank -%}
+              <ul class="service-area__codes">
+                {%- assign codes = block.settings.postal_codes | replace: '\r', '' | split: '\n' -%}
+                {%- for code in codes -%}
+                  {%- assign trimmed = code | strip -%}
+                  {%- if trimmed != blank -%}
+                    <li>{{ trimmed }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -53,26 +55,9 @@
   "name": "Service area",
   "tag": "section",
   "class": "section-wrapper",
-  "max_blocks": 6,
+  "max_blocks": 12,
   "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Serving homeowners across Ontario"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "We offer on-site visits in Oakville, Burlington, Mississauga, and nearby communities."
-    },
-    {
-      "type": "textarea",
-      "id": "note",
-      "label": "Note",
-      "default": "If you don't see your postal code listed, reach out and we'll confirm availability."
-    },
+
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -140,6 +125,97 @@
   ],
   "blocks": [
     {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "text_role",
+          "label": "Text role",
+          "options": [
+            { "value": "heading", "label": "Heading" },
+            { "value": "subheading", "label": "Subheading" },
+            { "value": "note", "label": "Note" },
+            { "value": "body", "label": "Body" }
+          ],
+          "default": "body"
+        },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "header", "content": "Layout" },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "options": [
+            { "value": "fit-content", "label": "Fit content" },
+            { "value": "100%", "label": "Fill width" }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "select",
+          "id": "max_width",
+          "label": "Max width",
+          "options": [
+            { "value": "narrow", "label": "Narrow" },
+            { "value": "normal", "label": "Normal" },
+            { "value": "none", "label": "No limit" }
+          ],
+          "default": "normal"
+        },
+        { "type": "header", "content": "Typography" },
+        {
+          "type": "select",
+          "id": "type_preset",
+          "label": "Preset",
+          "options": [
+            { "value": "paragraph", "label": "Paragraph" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "body", "label": "Body" }
+          ],
+          "default": "paragraph",
+          "info": "Edit presets in theme settings."
+        },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Color",
+          "options": [
+            { "value": "var(--color-foreground-heading)", "label": "Heading" },
+            { "value": "var(--color-foreground)", "label": "Body" },
+            { "value": "var(--color-primary)", "label": "Accent" }
+          ],
+          "default": "var(--color-foreground-heading)"
+        },
+        { "type": "header", "content": "Appearance" },
+        { "type": "checkbox", "id": "background", "label": "Show background", "default": false },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "alpha": true,
+          "default": "#00000026",
+          "visible_if": "{{ block.settings.background }}"
+        },
+        {
+          "type": "range",
+          "id": "corner_radius",
+          "label": "Corner radius",
+          "default": 0,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "visible_if": "{{ block.settings.background }}"
+        },
+        { "type": "header", "content": "Padding" },
+        { "type": "range", "id": "padding-block-start", "label": "Top padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+        { "type": "range", "id": "padding-block-end", "label": "Bottom padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+        { "type": "range", "id": "padding-inline-start", "label": "Left padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+        { "type": "range", "id": "padding-inline-end", "label": "Right padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+      ]
+    },
+    {
       "type": "area",
       "name": "Postal code group",
       "settings": [
@@ -174,6 +250,30 @@
     {
       "name": "Service area",
       "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text_role": "heading",
+            "text": "<p>Serving homeowners across Ontario</p>",
+            "type_preset": "h2"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text_role": "subheading",
+            "text": "<p>We offer on-site visits in Oakville, Burlington, Mississauga, and nearby communities.</p>",
+            "type_preset": "paragraph"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text_role": "note",
+            "text": "<p>If you don't see your postal code listed, reach out and we'll confirm availability.</p>",
+            "type_preset": "paragraph"
+          }
+        },
         { "type": "area" },
         { "type": "area" }
       ]
@@ -190,12 +290,13 @@
     margin-bottom: var(--gap-xl);
   }
 
-  .service-area__heading {
+  .service-area__text {
     margin: 0;
   }
 
-  .service-area__subheading,
-  .service-area__note {
+  .service-area__text--subheading,
+  .service-area__text--note,
+  .service-area__text--body {
     margin: 0;
     color: var(--color-foreground);
   }
