@@ -48,18 +48,31 @@
   {% content_for 'block', type: '_header-menu', id: 'header-menu' %}
 {% endcapture %}
 
-{% capture mobile_menu %}
-  {% content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile' %}
-{% endcapture %}
-
 {% capture navigation_bar %}
   {% content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent %}
 {% endcapture %}
 
+{% assign phone_href = '' %}
+{% if settings.business_phone != blank %}
+  {% assign phone_href = settings.business_phone | strip | remove: ' ' | replace: '(', '' | replace: ')', '' | replace: '.', '' | replace: '-', '' %}
+{% endif %}
+
+{% capture phone_drawer %}
+  {% if phone_href != '' %}
+    <a class="header__phone header-drawer__phone" href="tel:{{ phone_href }}">{{ settings.business_phone }}</a>
+  {% endif %}
+{% endcapture %}
+
+{% capture phone %}
+  {% if phone_href != '' %}
+    <a class="header__phone mobile:hidden" href="tel:{{ phone_href }}">{{ settings.business_phone }}</a>
+  {% endif %}
+{% endcapture %}
+
 {% capture actions %}
   <div class="header__actions-wrapper mobile:hidden">
-      {% render 'header-actions' %}
-        </div>
+    {% render 'header-actions' %}
+  </div>
 {% endcapture %}
 
 {% capture drawer_actions %}
@@ -72,7 +85,7 @@
       <a class="header-drawer__action" href="{{ routes.cart_url }}">
         {{ 'accessibility.cart' | t }}
       </a>
-      </div>
+    </div>
 {% endcapture %}
 
 {% comment %} Handle localization positioning {% endcomment %}
@@ -100,23 +113,6 @@
   {% endif %}
 {% endif %}
 
-{% assign phone_href = '' %}
-{% if settings.business_phone != blank %}
-  {% assign phone_href = settings.business_phone | strip | remove: ' ' | replace: '(', '' | replace: ')', '' | replace: '.', '' | replace: '-', '' %}
-{% endif %}
-
-{% capture phone %}
-  {% if phone_href != '' %}
-    <a class="header__phone mobile:hidden" href="tel:{{ phone_href }}">{{ settings.business_phone }}</a>
-  {% endif %}
-{% endcapture %}
-
-{% capture phone_drawer %}
-  {% if phone_href != '' %}
-    <a class="header__phone header-drawer__phone" href="tel:{{ phone_href }}">{{ settings.business_phone }}</a>
-  {% endif %}
-{% endcapture %}
-
 {% capture search %}
   {% render 'search', style: search_style, class: search_class %}
 {% endcapture %}
@@ -125,6 +121,17 @@
   {% if search_style != 'none' %}
     {% render 'search', style: search_style, class: 'header-drawer__search' %}
   {% endif %}
+{% endcapture %}
+
+{% capture mobile_menu %}
+  {% content_for 'block',
+    type: '_header-menu',
+    id: 'header-menu',
+    variant: 'mobile',
+    drawer_search: drawer_search,
+    drawer_actions: drawer_actions,
+    phone_drawer: phone_drawer
+  %}
 {% endcapture %}
 
 {% assign booking_link_header = settings.booking_page_link %}
