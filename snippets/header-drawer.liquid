@@ -15,6 +15,9 @@
   assign block_settings = block.settings
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
+  assign drawer_search = drawer_search | default: ''
+  assign drawer_actions = drawer_actions | default: ''
+  assign drawer_phone = phone_drawer | default: ''
 
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
@@ -559,6 +562,24 @@
           {% endif %}
         </ul>
       </nav>
+
+      {% if drawer_search != '' or drawer_phone != '' or drawer_actions != '' %}
+        <div class="header-drawer__extras">
+          {% if drawer_search != '' %}
+            <div class="header-drawer__search-wrapper">
+              {{ drawer_search }}
+            </div>
+          {% endif %}
+          {% if drawer_phone != '' %}
+            <div class="header-drawer__phone-wrapper">
+              {{ drawer_phone }}
+            </div>
+          {% endif %}
+          {% if drawer_actions != '' %}
+            {{ drawer_actions }}
+          {% endif %}
+        </div>
+      {% endif %}
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"
         style="--menu-drawer-animation-index: {{ linklist.links.size }};"
@@ -647,6 +668,36 @@
 {% stylesheet %}
   .header__icon--menu {
     position: initial;
+  }
+
+  .header-drawer__extras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+    padding: var(--padding-lg);
+  }
+
+  .header-drawer__search-wrapper :is(form, .search) {
+    width: 100%;
+  }
+
+  .header-drawer__phone-wrapper,
+  .header-drawer__phone {
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .header-drawer__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .header-drawer__action {
+    text-decoration: none;
+    color: var(--color-foreground);
+    font-weight: 600;
   }
 
   @media screen and (min-width: 750px) {
