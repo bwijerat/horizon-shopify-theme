@@ -59,6 +59,7 @@
 <header-drawer
   class="header-drawer {{ class }}"
   style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;"
+  data-drawer-type="{{ data_header_drawer_type }}"
 >
   <details
     id="Details-menu-drawer-container"
@@ -691,7 +692,7 @@
   .header-drawer__quick-link {
     display: flex;
     align-items: center;
-    gap: var(--gap-md);
+    gap: var(--gap-lg);
   }
 
   .header-drawer__quick-link--button {
@@ -723,6 +724,23 @@
   .header-drawer__quick-label {
     display: inline-flex;
     align-items: center;
+  }
+
+  .menu-drawer__menu--quick .menu-drawer__menu-item {
+    font-size: calc(var(--menu-top-level-font-size) * 1.25);
+    line-height: calc(var(--menu-top-level-font-line-height) * 1.1);
+    font-weight: 600;
+    min-height: calc(2.5 * var(--padding-lg) + var(--icon-size-sm));
+  }
+
+  .menu-drawer__menu--quick .header-drawer__quick-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  header-drawer[data-drawer-type='mobile-actions-drawer'] .menu-drawer__close-button {
+    margin-left: auto;
+    margin-right: var(--padding-lg);
   }
 
   @media screen and (min-width: 750px) {
