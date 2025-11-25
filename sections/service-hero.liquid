@@ -25,6 +25,9 @@
     --service-hero-media-width: {{ section.settings.image_width }}%;
     --service-hero-media-height: {{ section.settings.image_height }}px;
   {% endif %}
+  --service-hero-media-max: {{ section.settings.media_max_width }}px;
+  --service-hero-media-justify: {{ section.settings.media_horizontal_alignment }};
+  --service-hero-media-align: {{ section.settings.media_vertical_alignment }};
 {%- endcapture -%}
 
 {%- assign buttons_markup = '' -%}
@@ -119,15 +122,15 @@
 
       <div
         class="service-hero__media {% if section.settings.image_lock_aspect %}service-hero__media--locked{% else %}service-hero__media--unlocked{% endif %}"
-        style="{{ media_styles | strip_newlines }}"
+        style="{{ media_styles | strip_newlines }} justify-self: var(--service-hero-media-justify); align-self: var(--service-hero-media-align);"
       >
         {%- if section.settings.image != blank -%}
           {{
             section.settings.image
-            | image_url: width: 1500
+            | image_url: width: 1800
             | image_tag:
               loading: 'lazy',
-              widths: '180, 360, 720, 960, 1200, 1500',
+              widths: '180, 360, 720, 960, 1200, 1500, 1800',
               sizes: '(min-width: 1200px) 50vw, 100vw',
               alt: section.settings.image_alt | default: hero_heading_fallback | default: shop.name | escape
           }}
@@ -775,6 +778,38 @@
       "label": "Background image"
     },
     {
+      "type": "range",
+      "id": "media_max_width",
+      "label": "Foreground image max width",
+      "min": 240,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "select",
+      "id": "media_horizontal_alignment",
+      "label": "Foreground image horizontal align",
+      "options": [
+        { "value": "start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "media_vertical_alignment",
+      "label": "Foreground image vertical align",
+      "options": [
+        { "value": "start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
@@ -914,8 +949,9 @@
 
   .service-hero__media {
     width: 100%;
-    max-width: var(--service-hero-media-width, 100%);
-    justify-self: center;
+    max-width: var(--service-hero-media-max, var(--service-hero-media-width, 100%));
+    justify-self: var(--service-hero-media-justify, center);
+    align-self: var(--service-hero-media-align, center);
   }
 
   .service-hero__media img {
