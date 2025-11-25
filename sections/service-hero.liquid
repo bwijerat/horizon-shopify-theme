@@ -28,6 +28,8 @@
   --service-hero-media-max: {{ section.settings.media_max_width }}px;
   --service-hero-media-justify: {{ section.settings.media_horizontal_alignment }};
   --service-hero-media-align: {{ section.settings.media_vertical_alignment }};
+  --service-hero-media-offset-x: {{ section.settings.media_offset_x }}px;
+  --service-hero-media-offset-y: {{ section.settings.media_offset_y }}px;
 {%- endcapture -%}
 
 {%- assign buttons_markup = '' -%}
@@ -810,6 +812,26 @@
       "default": "center"
     },
     {
+      "type": "range",
+      "id": "media_offset_x",
+      "label": "Foreground image horizontal offset",
+      "min": -400,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "media_offset_y",
+      "label": "Foreground image vertical offset",
+      "min": -400,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
@@ -952,6 +974,7 @@
     max-width: var(--service-hero-media-max, var(--service-hero-media-width, 100%));
     justify-self: var(--service-hero-media-justify, center);
     align-self: var(--service-hero-media-align, center);
+    transform: translate(var(--service-hero-media-offset-x, 0px), var(--service-hero-media-offset-y, 0px));
   }
 
   .service-hero__media img {
