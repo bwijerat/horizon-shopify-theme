@@ -490,7 +490,7 @@
           "type": "text",
           "settings": {
             "text_role": "subheading",
-            "text": "<p>We currently serve homeowners throughout Halton and Peel Region.</p>",
+            "text": "<p>We currently serve homeowners throughout Peel Region.</p>",
             "width": "100%",
             "max_width": "none",
             "type_preset": "paragraph",
