@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "service_hero": {
@@ -7,9 +16,25 @@
           "type": "hero_text",
           "settings": {
             "text_role": "eyebrow",
-            "text": "<p>HomeBase Support Services</p>",
-            "type_preset": "paragraph",
-            "case": "uppercase"
+            "text": "<p><strong>HomeBase Support Services</strong></p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h5",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "uppercase",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 10,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "hero_heading": {
@@ -17,15 +42,49 @@
           "settings": {
             "text_role": "heading",
             "text": "<p>On-Demand Home Services You Can Rely On</p>",
-            "type_preset": "h1"
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "hero_subheading": {
           "type": "hero_text",
           "settings": {
             "text_role": "subheading",
-            "text": "<p>Snow removal, lawn care, IT support, and pet care for homeowners in Ontario.</p>",
-            "type_preset": "paragraph"
+            "text": "<p>Lawn care, IT support, and Pet care to simply running a home.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "hero_primary_button": {
@@ -34,7 +93,12 @@
             "label": "Request a Quote",
             "link": "/pages/contact",
             "use_booking_link": false,
-            "theme": "primary"
+            "open_in_new_tab": false,
+            "theme": "primary",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
           }
         },
         "hero_booking_button": {
@@ -43,7 +107,12 @@
             "label": "Book Service",
             "link": "/pages/book-service",
             "use_booking_link": false,
-            "theme": "booking"
+            "open_in_new_tab": false,
+            "theme": "booking",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
           }
         },
         "hero_secondary_button": {
@@ -51,7 +120,13 @@
           "settings": {
             "label": "View Services",
             "link": "/collections/services",
-            "theme": "secondary"
+            "use_booking_link": false,
+            "open_in_new_tab": false,
+            "theme": "secondary",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
           }
         }
       },
@@ -68,12 +143,20 @@
         "subheading_button_gap": 24,
         "button_gap": 16,
         "content_media_gap": 64,
-        "image": "",
+        "image": "shopify://shop_images/print_transparent.svg",
         "image_alt": "",
         "image_lock_aspect": true,
         "image_size_locked": 100,
+        "image_width": 100,
+        "image_height": 480,
+        "background_image": "shopify://shop_images/gemini_hero_bg2.png",
+        "media_max_width": 1100,
+        "media_horizontal_alignment": "center",
+        "media_vertical_alignment": "center",
+        "media_offset_x": 0,
+        "media_offset_y": -50,
         "color_scheme": "scheme-4",
-        "padding-block-start": 96,
+        "padding-block-start": 56,
         "padding-block-end": 96
       }
     },
@@ -85,23 +168,57 @@
           "settings": {
             "text_role": "heading",
             "text": "<p>Core Services</p>",
-            "type_preset": "h2"
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "core_subheading": {
           "type": "text",
           "settings": {
             "text_role": "subheading",
-            "text": "<p>Snow Removal, Lawn Care, IT Support, and Pet Care tailored for homeowners.</p>",
-            "type_preset": "paragraph"
+            "text": "<p>Lawn Care, IT Support, and Pet Care tailored for homes.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "snow": {
           "type": "service",
+          "disabled": true,
           "settings": {
             "title": "Snow Removal",
             "description": "Clearing driveways, walkways, and entryways with reliable response times.",
-            "icon": "",
             "icon_fallback": "❄️",
             "link_label": "Learn more",
             "link": "/pages/snow-removal",
@@ -114,7 +231,6 @@
           "settings": {
             "title": "Lawn Care",
             "description": "Grass cutting, leaf collection, and seasonal cleanups to keep your yard ready.",
-            "icon": "",
             "icon_fallback": "🌿",
             "link_label": "Learn more",
             "link": "/pages/lawn-care",
@@ -127,7 +243,6 @@
           "settings": {
             "title": "IT Support",
             "description": "Setup, troubleshooting, and consulting for your home technology.",
-            "icon": "",
             "icon_fallback": "💻",
             "link_label": "Learn more",
             "link": "/pages/it-support",
@@ -140,7 +255,6 @@
           "settings": {
             "title": "Pet Care",
             "description": "Dog walking and pet check-ins with caring, reliable helpers.",
-            "icon": "",
             "icon_fallback": "🐾",
             "link_label": "Learn more",
             "link": "/pages/pet-care",
@@ -159,8 +273,11 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "padding-block-start": 84,
-        "padding-block-end": 84
+        "heading_padding_top": 0,
+        "heading_padding_bottom": 16,
+        "heading_gap": 16,
+        "padding-block-start": 36,
+        "padding-block-end": 32
       }
     },
     "steps": {
@@ -171,7 +288,24 @@
           "settings": {
             "text_role": "heading",
             "text": "<p>How it works</p>",
-            "type_preset": "h2"
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "steps_subheading": {
@@ -179,7 +313,24 @@
           "settings": {
             "text_role": "subheading",
             "text": "<p>Simple, transparent steps for every service request.</p>",
-            "type_preset": "paragraph"
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "step1": {
@@ -216,8 +367,11 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "heading_padding_top": 0,
+        "heading_padding_bottom": 16,
+        "heading_gap": 16,
+        "padding-block-start": 32,
+        "padding-block-end": 32
       }
     },
     "testimonials": {
@@ -228,7 +382,17 @@
           "settings": {
             "text_role": "heading",
             "text": "<p>Trusted by homeowners</p>",
-            "type_preset": "h2"
+            "width": "fit-content",
+            "max_width": "normal",
+            "type_preset": "h2",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "testimonials_subheading": {
@@ -236,7 +400,17 @@
           "settings": {
             "text_role": "subheading",
             "text": "<p>Responsive, trustworthy service for snow, lawn, IT, and pet care.</p>",
-            "type_preset": "paragraph"
+            "width": "fit-content",
+            "max_width": "normal",
+            "type_preset": "paragraph",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "t1": {
@@ -281,10 +455,14 @@
         "t3",
         "testimonials_area"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "heading_padding_top": 0,
+        "heading_padding_bottom": 16,
+        "heading_gap": 16,
+        "padding-block-start": 32,
+        "padding-block-end": 32
       }
     },
     "service_area": {
@@ -295,7 +473,17 @@
           "settings": {
             "text_role": "heading",
             "text": "<p>Service area</p>",
-            "type_preset": "h2"
+            "width": "fit-content",
+            "max_width": "normal",
+            "type_preset": "h2",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "service_area_subheading": {
@@ -303,7 +491,17 @@
           "settings": {
             "text_role": "subheading",
             "text": "<p>We currently serve homeowners throughout Halton and Peel Region.</p>",
-            "type_preset": "paragraph"
+            "width": "100%",
+            "max_width": "none",
+            "type_preset": "paragraph",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "service_area_note": {
@@ -311,24 +509,25 @@
           "settings": {
             "text_role": "note",
             "text": "<p>Need help outside these zones? Send your request and we’ll confirm availability.</p>",
-            "type_preset": "paragraph"
+            "width": "100%",
+            "max_width": "none",
+            "type_preset": "paragraph",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "oakville": {
           "type": "area",
           "settings": {
-            "title": "Oakville",
-            "description": "River Oaks, Westmount, Bronte",
-            "postal_codes": "L6H\nL6M\nL6L\nL6K",
-            "color_scheme": "scheme-2"
-          }
-        },
-        "burlington": {
-          "type": "area",
-          "settings": {
-            "title": "Burlington",
-            "description": "Headon, Alton Village, Roseland",
-            "postal_codes": "L7L\nL7M\nL7P",
+            "title": "Mississauga",
+            "description": "East Credit",
+            "postal_codes": "L5V",
             "color_scheme": "scheme-2"
           }
         }
@@ -337,13 +536,15 @@
         "service_area_heading",
         "service_area_subheading",
         "service_area_note",
-        "oakville",
-        "burlington"
+        "oakville"
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "padding-block-start": 72,
-        "padding-block-end": 72
+        "heading_padding_top": 0,
+        "heading_padding_bottom": 16,
+        "heading_gap": 16,
+        "padding-block-start": 32,
+        "padding-block-end": 52
       }
     }
   },
